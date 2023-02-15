@@ -12,7 +12,7 @@ const useCases = [
     ],
     cta: {
       label: "了解更多",
-      url: "/blog/tags/benchmark/",
+      url: "https://typer.owenyang.top",
     },
   },
   {

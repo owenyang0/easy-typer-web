@@ -236,7 +236,7 @@ const config = {
             // },
             {
               label: "虎码官网",
-              to: "/careers/",
+              to: "https://tiger-code.com",
             },
           ],
         },
