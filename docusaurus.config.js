@@ -25,33 +25,33 @@ const config = {
     require.resolve("./plugins/optimize/index"),
     require.resolve("./plugins/manifest/index"),
     require.resolve("./plugins/delay-code-block-appearance"),
-    [
-      "@docusaurus/plugin-pwa",
-      {
-        pwaHead: [
-          {
-            tagName: "link",
-            rel: "manifest",
-            href: "/manifest.webmanifest",
-          },
-          {
-            tagName: "meta",
-            name: "theme-color",
-            content: "#21222c",
-          },
-          {
-            tagName: "meta",
-            name: "apple-mobile-web-app-capable",
-            content: "yes",
-          },
-          {
-            tagName: "meta",
-            name: "apple-mobile-web-app-status-bar-style",
-            content: "#21222c",
-          },
-        ],
-      },
-    ],
+    // [
+    //   "@docusaurus/plugin-pwa",
+    //   {
+    //     pwaHead: [
+    //       {
+    //         tagName: "link",
+    //         rel: "manifest",
+    //         href: "/manifest.webmanifest",
+    //       },
+    //       {
+    //         tagName: "meta",
+    //         name: "theme-color",
+    //         content: "#21222c",
+    //       },
+    //       {
+    //         tagName: "meta",
+    //         name: "apple-mobile-web-app-capable",
+    //         content: "yes",
+    //       },
+    //       {
+    //         tagName: "meta",
+    //         name: "apple-mobile-web-app-status-bar-style",
+    //         content: "#21222c",
+    //       },
+    //     ],
+    //   },
+    // ],
     [
       require.resolve("./plugins/blog"),
       {
