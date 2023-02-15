@@ -121,7 +121,7 @@ function Navbar(): JSX.Element {
             uppercase={false}
             size="xsmall"
             variant="secondary"
-            to="/cloud/"
+            to="https://typer.owenyang.top/download"
           >
             下载macOS版
           </Button>

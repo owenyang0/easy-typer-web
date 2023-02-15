@@ -3,7 +3,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 import Button from "@theme/Button"
 import clsx from "clsx"
 import React from "react"
-import Subscribe from "../../components/Subscribe"
+// import Subscribe from "../../components/Subscribe"
 import customFields from "../../config/customFields"
 import styles from "./styles.module.css"
 
