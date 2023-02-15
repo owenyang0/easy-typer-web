@@ -43,7 +43,7 @@
 }
 
 .link, .link:hover {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: var(--font-size-normal);
   font-weight: 500;
   color: #ffffff;

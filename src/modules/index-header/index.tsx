@@ -17,8 +17,13 @@ export const Header = () => {
         </Section.Subtitle>
 
         <div className={styles.getStartedButtons}>
-          <Link to="https://typer.owenyang.top" className={styles.joinPublicPreviewLink}>
-            <Button newTab={true}>开始跟打练习</Button>
+          <Link
+            to="https://typer.owenyang.top"
+            className={styles.joinPublicPreviewLink}
+          >
+            <Button newTab uppercase={false}>
+              开始Web跟打练习
+            </Button>
           </Link>
         </div>
       </div>

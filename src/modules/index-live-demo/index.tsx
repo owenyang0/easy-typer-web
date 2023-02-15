@@ -1,50 +1,57 @@
-import React, { useEffect, useState } from "react"
-import exampleQueriesRaw from "./example-queries"
-import customFields from "../../config/customFields"
-import Highlight from "../../components/Highlight"
+import React from "react"
+// import React, { useEffect, useState } from "react"
+// import exampleQueriesRaw from "./example-queries"
+// import customFields from "../../config/customFields"
+// import Highlight from "../../components/Highlight"
 import { Section } from "../../components/Section"
 import styles from "./styles.module.css"
-import Button from "@theme/Button"
-import TypeIt from "typeit-react"
+// import Button from "@theme/Button"
+// import TypeIt from "typeit-react"
 
-const exampleQueries = exampleQueriesRaw.map(({ comment, query }) => ({
-  url: `${customFields.demoUrl}?query=${encodeURIComponent(
-    [comment, query].join("\n"),
-  )}&executeQuery=true`,
-  query,
-  view() {
-    return <Highlight code={query} />
-  },
-}))
+// const exampleQueries = exampleQueriesRaw.map(({ comment, query }) => ({
+//   url: `${customFields.demoUrl}?query=${encodeURIComponent(
+//     [comment, query].join("\n"),
+//   )}&executeQuery=true`,
+//   query,
+//   view() {
+//     return <Highlight code={query} />
+//   },
+// }))
 
 const LiveDemo = () => {
-  const [query, setQuery] = useState<null | number>(null)
+  // const [query, setQuery] = useState<null | number>(null)
 
-  useEffect(() => {
-    const isClient = typeof window !== "undefined"
+  // useEffect(() => {
+  //   const isClient = typeof window !== "undefined"
 
-    if (isClient) {
-      setQuery(Math.floor(Math.random() * exampleQueries.length))
-    }
-  }, [])
+  //   if (isClient) {
+  //     setQuery(Math.floor(Math.random() * exampleQueries.length))
+  //   }
+  // }, [])
 
   return (
     <Section fullWidth odd center>
       <Section.Title center size="small">
-        See live demo
+        直接载文 - 演示
       </Section.Title>
       <Section.Subtitle>
-        Query three large datasets and more than 2 billion rows in milliseconds
-        with SQL
+        易跟打macOS版可通过热键 F4
+        激活当前QQ群聊天窗口，从当前鼠标位置载文并跟打
       </Section.Subtitle>
 
       <div className={styles.preview}>
-        <Section.Subtitle className={styles.previewHeader}>
+        {/* <Section.Subtitle className={styles.previewHeader}>
           Try QuestDB demo in your browser
-        </Section.Subtitle>
+        </Section.Subtitle> */}
 
-        <div className={styles.editor}>
-          <div className={styles.code}>
+        <div className={styles.video}>
+          <video
+            autoPlay
+            controls
+            loop
+            src="https://s.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4"
+          />
+          {/* <div className={styles.code}>
             {typeof query === "number" && (
               <TypeIt
                 options={{
@@ -57,10 +64,10 @@ const LiveDemo = () => {
                 {exampleQueries[query].view()}
               </TypeIt>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
-      <Button
+      {/* <Button
         href={
           typeof query === "number"
             ? exampleQueries[query].url
@@ -68,7 +75,7 @@ const LiveDemo = () => {
         }
       >
         Load results&nbsp;&nbsp;&gt;
-      </Button>
+      </Button> */}
     </Section>
   )
 }

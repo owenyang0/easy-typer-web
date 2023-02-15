@@ -93,7 +93,7 @@ function Navbar(): JSX.Element {
       <div className={clsx("navbar__inner", styles.inner)}>
         <div className="navbar__items">
           <a className={clsx("navbar__brand", styles.brand)} href="/">
-            QuestDB
+            木易跟打器
           </a>
           {leftItems.map((item, i) => (
             <NavbarItem {...item} key={i} />
@@ -118,11 +118,12 @@ function Navbar(): JSX.Element {
           </div>
           <Button
             className={clsx(styles.ctaButton, styles.getQuestdb)}
+            uppercase={false}
             size="xsmall"
             variant="secondary"
             to="/cloud/"
           >
-            Get QuestDB
+            下载macOS版
           </Button>
 
           <div
@@ -141,7 +142,7 @@ function Navbar(): JSX.Element {
               role="img"
               focusable="false"
             >
-              <title>An icon showing a hamburger menu</title>
+              <title>点击展开菜单</title>
               <path
                 stroke="currentColor"
                 strokeLinecap="round"

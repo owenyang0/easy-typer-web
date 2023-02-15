@@ -1,6 +1,6 @@
 import clsx from "clsx"
 import React from "react"
-import Customers from "../components/Customers"
+// import Customers from "../components/Customers"
 import customFields from "../config/customFields"
 import { QueryScroller } from "../components/QueryScroller"
 
@@ -112,23 +112,23 @@ const Home = () => (
     replaceTitle
   >
     <Header />
-    <Customers />
+    {/* <Customers /> */}
     <Section fullWidth center>
       <UseCases />
     </Section>
 
     <LiveDemo />
 
-    <Section fullWidth odd>
+    {/* <Section fullWidth odd>
       <Integration />
-    </Section>
+    </Section> */}
 
-    <QueryScroller />
-    <Cards />
-    <Console />
+    {/* <QueryScroller /> */}
+    {/* <Cards /> */}
+    {/* <Console /> */}
 
     <Section>
-      <ActionFooter />
+      {/* <ActionFooter /> */}
     </Section>
   </Layout>
 )

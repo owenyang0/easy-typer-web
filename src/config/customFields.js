@@ -2,7 +2,7 @@ const consts = require("./consts")
 
 module.exports = {
   artifactHubUrl: "https://artifacthub.io/packages/helm/questdb/questdb",
-  copyright: `Copyright © ${new Date().getFullYear()} QuestDB`,
+  copyright: `Copyright © ${new Date().getFullYear()} 木易某某`,
   crunchbaseUrl: "https://www.crunchbase.com/organization/quest-db",
   demoUrl: `https://demo.${consts.domain}`,
   description:
@@ -10,7 +10,7 @@ module.exports = {
   dockerUrl: "https://hub.docker.com/r/questdb/questdb",
   domain: consts.domain,
   githubOrgUrl: consts.githubOrgUrl,
-  githubUrl: `${consts.githubOrgUrl}/questdb`,
+  githubUrl: `${consts.githubOrgUrl}/easy-typer`,
   websiteGithubUrl: `${consts.githubOrgUrl}/questdb.io`,
   linkedInUrl: "https://www.linkedin.com/company/questdb/",
   oneLiner: "QuestDB: the database for time series",

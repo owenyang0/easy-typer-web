@@ -4,49 +4,41 @@ import styles from "./styles.module.css"
 
 const useCases = [
   {
-    title: "Performance",
+    title: "跨平台",
     uses: [
-      "2M rows/s per node",
-      "5-10x faster vs Timescale & InfluxDB",
-      "Don’t worry about cardinality",
-      "Columnar storage",
-      "Data partitioned by time",
-      "SIMD-optimized queries",
+      "Web 在线跟打练习",
+      "macOS 平台上直接载文",
+      "基于PWA的免安装 Web App",
     ],
     cta: {
-      label: "See Benchmarks",
+      label: "了解更多",
       url: "/blog/tags/benchmark/",
     },
   },
   {
-    title: "Developer experience",
+    title: "功能丰富",
     uses: [
-      "SQL time series extensions",
-      "Built-in SQL optimizer and REST API",
-      "PostgreSQL driver compatibility",
-      "Real-time streaming API",
-      "SQL and time-series joins",
-      "Grafana integration",
+      "阅读、发文、跟打、成绩可视化等",
+      "编码提示、支持复合指标练习",
+      "速度、击键、码长等丰富成绩指标",
+      "内置单字+名篇等丰富练习素材",
     ],
     cta: {
-      label: "See live demo",
+      label: "更多功能",
       url: "https://demo.questdb.io",
     },
   },
   {
-    title: "Operational simplicity",
+    title: "安全性",
     uses: [
-      "Fully managed hosted cloud",
-      "Elastic cloud instances",
-      "TLS for all protocols",
-      "Online snapshot based backups",
-      "Monitoring dashboards",
-      "SSO authentication",
+      "基于浏览器 IndexDB 的数据本地化",
+      "无任何数据后台上传",
+      "虎码用户设置预设",
     ],
 
     cta: {
-      label: "See Cloud",
-      url: "/cloud/",
+      label: "Read IndexDB",
+      url: "https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API",
     },
   },
 ]

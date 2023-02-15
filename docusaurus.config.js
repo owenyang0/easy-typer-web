@@ -5,7 +5,7 @@ const markdownPlugins = require("./plugins/markdown-plugins")
 
 const config = {
   title: '木易跟打器',
-  tagline: 'macOS平台唯一的、可直接载文的跟打器',
+  tagline: '易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器',
   url: `https://${consts.domain}`,
   baseUrl: "/",
   baseUrlIssueBanner: false,
@@ -158,36 +158,32 @@ const config = {
         //     },
         //   ],
         // },
-        {
-          label: "使用文档",
-          position: "left",
-          href: "#",
-          items: [
-            // {
-            //   label: "博客",
-            //   to: "/blog/",
-            //   activeBaseRegex: "/blog/?$",
-            // },
-            {
-              label: "快速开始",
-              to: "/blog/tags/tutorial/",
-              activeBaseRegex: "/blog/tags/tutorial/?$",
-            },
-            {
-              label: "发布记录",
-              to: "/community/",
-            },
-            {
-              label: "Slack Community",
-              to: customFields.slackUrl,
-            },
-          ],
-        },
-        {
-          label: "博客",
-          to: "/docs/",
-          position: "left",
-        },
+        // {
+        //   label: "使用文档",
+        //   position: "left",
+        //   href: "#",
+        //   items: [
+        //     // {
+        //     //   label: "博客",
+        //     //   to: "/blog/",
+        //     //   activeBaseRegex: "/blog/?$",
+        //     // },
+        //     {
+        //       label: "快速开始",
+        //       to: "/docs/",
+        //       activeBaseRegex: "/blog/tags/tutorial/?$",
+        //     },
+        //     {
+        //       label: "发布记录",
+        //       to: "/community/",
+        //     },
+        //   ],
+        // },
+        // {
+        //   label: "博客",
+        //   to: "/blog/",
+        //   position: "left",
+        // },
         {
           href: 'https://typer.owenyang.top',
           label: '跟打器',
@@ -210,107 +206,67 @@ const config = {
     footer: {
       links: [
         {
-          title: "Product",
+          title: "产品",
           items: [
             {
-              label: "Cloud",
-              to: "/cloud/",
-            },
-            {
-              label: "Open Source",
-              to: "/get-questdb/",
-            },
-            {
-              label: "Enterprise",
-              to: "/enterprise/",
-            },
-            {
-              label: "Pricing",
-              to: "/pricing/",
-            },
-            {
-              label: "Use Cases",
-              to: "/use-cases/",
-            },
-            {
-              label: "Customers",
-              to: "/customers/",
-            },
-            {
-              label: "Roadmap",
-              href: "https://github.com/orgs/questdb/projects/1/views/5",
+              label: "跟打器",
+              to: "https://typer.owenyang.top",
             },
           ],
         },
+        // {
+        //   title: "文档",
+        //   items: [
+        //     {
+        //       label: "快速开始",
+        //       to: "/blog/tags/tutorial/",
+        //     },
+        //     {
+        //       label: "博客",
+        //       to: "/blog/",
+        //     }
+        //   ],
+        // },
         {
-          title: "Developers",
+          title: "友链",
           items: [
+            // {
+            //   label: "关于作者",
+            //   to: "/about-us/",
+            // },
             {
-              label: "Docs",
-              to: "/docs/",
-            },
-            {
-              label: "Tutorials",
-              to: "/blog/tags/tutorial/",
-            },
-            {
-              label: "Blog",
-              to: "/blog/",
-            },
-            {
-              label: "Discussions",
-              to: customFields.linenUrl,
-            },
-            {
-              label: "Join Slack",
-              to: customFields.slackUrl,
-            },
-            {
-              label: "Swag",
-              to: "/community/",
-            },
-          ],
-        },
-        {
-          title: "Company",
-          items: [
-            {
-              label: "About us",
-              to: "/about-us/",
-            },
-            {
-              label: "Careers",
+              label: "虎码官网",
               to: "/careers/",
             },
           ],
         },
         {
-          title: "Social",
+          title: "社交",
           items: [
-            {
-              label: "Twitter",
-              href: customFields.twitterUrl,
-            },
+            // {
+            //   label: "Twitter",
+            //   href: customFields.twitterUrl,
+            // },
             {
               label: "GitHub",
               href: customFields.githubUrl,
             },
-            {
-              label: "StackOverflow",
-              to: customFields.stackoverflowUrl,
-            },
-            {
-              label: "Linkedin",
-              href: customFields.linkedInUrl,
-            },
-            {
-              label: "YouTube",
-              to: customFields.videosUrl,
-            },
-            {
-              label: "Reddit",
-              href: customFields.redditUrl,
-            },
+            // {
+            //   label: "StackOverflow",
+            //   to: customFields.stackoverflowUrl,
+            // },
+            // {
+            //   label: "Linkedin",
+            //   href: customFields.linkedInUrl,
+            // },
+            // {
+            //   label: "YouTube",
+            //   to: customFields.videosUrl,
+            // },
+            // {
+            //   label: "Reddit",
+            //   href: customFields.redditUrl,
+            // },
           ],
         },
       ],

@@ -79,7 +79,7 @@ const integrations: Array<{
 export const Integration = () => (
   <Section noGap>
     <Section.Title size="small" center>
-      Use QuestDB with the tools you love
+      他们在使用易跟打
     </Section.Title>
 
     <div className={styles.integrations}>

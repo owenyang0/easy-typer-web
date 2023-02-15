@@ -46,38 +46,16 @@ const Footer = () => {
     <footer className={styles.root}>
       <div className={clsx(styles.content, styles.center)}>
         <img
-          alt="QuestDB logo"
+          alt="易跟打 logo"
           className={styles.logo}
-          src="/img/footer/questdb.svg"
-          title="QuestDB - Fastest open source database for time-series and analytics"
-          width={108}
-          height={27}
+          src="/img/footer/easy-typer.png"
+          title="易跟打 - 一款支持macOS、Web使用的跨平台打字练习程序"
+          width={50}
+          height={50}
         />
 
         <div className={styles.tagline}>
           <p className={styles.taglineText}>{siteConfig.tagline}</p>
-
-          <div className={styles.subscribe}>
-            <p className={styles.subscribeText}>
-              Subscribe to our newsletter. Stay up to date with all things
-              QuestDB.
-            </p>
-
-            <Subscribe
-              classNameInputs={styles.subscribeInputs}
-              submitButtonVariant="tertiary"
-              provider="newsletter"
-              renderSubmitButton={({ loading, defaultLoader }) => (
-                <Button
-                  variant="tertiary"
-                  type="submit"
-                  className={styles.subscribeSubmit}
-                >
-                  {loading ? defaultLoader : "Subscribe"}
-                </Button>
-              )}
-            />
-          </div>
 
           <Button
             className={styles.githubButton}
@@ -124,12 +102,8 @@ const Footer = () => {
         <div className={clsx(styles.bottom, styles.center)}>
           {customFields.copyright}
 
-          <a className={styles.link} href="/privacy-notice/">
-            Privacy
-          </a>
-
-          <a className={styles.link} href="/terms/">
-            Terms
+          <a className={styles.link} href="https://beian.miit.gov.cn/">
+            蜀ICP备2023002101号-1
           </a>
         </div>
       </div>
