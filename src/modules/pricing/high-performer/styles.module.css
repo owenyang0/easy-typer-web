@@ -1,0 +1,44 @@
+.root {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quoteWrapper {
+  display: grid;
+  grid-gap: 1rem;
+}
+
+.quote {
+  margin: 0;
+}
+
+.stars {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  display: inline-flex;
+  vertical-align: middle;
+  height: 20px;
+  width: 19px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("/img/pages/pricing/star.svg?inline");
+}
+
+html[data-theme='light'] .star {
+  filter: invert(1);
+}
+
+@media screen and (min-width: 1000px) {
+  .root {
+    width: 610px;
+  }
+
+  .quote {
+    font-size: 36px;
+  }
+}

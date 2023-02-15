@@ -1,0 +1,45 @@
+---
+title: QuestDB 6.5.4 Release - Hacktoberfest
+author: Pei-Shan Wu
+author_title: QuestDB Team
+author_url: https://github.com/pswu11
+author_image_url: https://avatars.githubusercontent.com/pswu11
+description: QuestDB 6.5.4 Release - Hacktoberfest
+keywords: [questdb, release, database, hacktoberfest, opensource]
+tags: [release, product, hacktoberfest, event, community]
+image: /img/blog/2022-10-25/banner.png
+permalink: https://github.com/questdb/questdb/releases/tag/6.5.4
+---
+
+import Screenshot from "@theme/Screenshot"
+
+Thanks to our amazing Hacktoberfest contributors, this release includes new SQL
+features with a focus on string and math functions, as well as performance and
+stability improvements brought by our core engineers.
+
+<!--truncate-->
+
+[Version 6.5.4](https://github.com/questdb/questdb/releases/tag/6.5.4) release
+highlights:
+
+- Add SQL string functions: `lower()`, `upper()`, `start_with()`, `lpad()`,
+  `rpad()`, `split_part()`
+- Add SQL numeric functions: `log10()`, `ln()`
+- Support `CREATE TABLE LIKE` syntax to reuse schema of an existing table
+- Add active SQL highlight for web console
+- Support using `row_number()` with `ORDER BY`
+- Allow `ALTER DROP` on the latest active partition
+- Improve performance for ILP and `GROUP BY` aggregations
+
+Special thanks to [@ArjunSharda](https://github.com/ArjunSharda),
+[@TheZal](https://github.com/TheZal), [@Ln11211](https://github.com/Ln11211),
+[@ShubhamPalriwala](https://github.com/ShubhamPalriwala),
+[@blackstar-baba](https://github.com/blackstar-baba),
+[@akki1306](https://github.com/akki1306),
+[@DarthBenro008](https://github.com/DarthBenro008), [@bsnxsourav](https://github.com/bsnxsourav),
+[@sklarsa](https://github.com/sklarsa),
+[@Twilight-Shuxin](https://github.com/Twilight-Shuxin),
+[@eigengravy](https://github.com/eigengravy) for code contributions!
+
+Read the
+[full release notes](https://github.com/questdb/questdb/releases/tag/6.5.4).

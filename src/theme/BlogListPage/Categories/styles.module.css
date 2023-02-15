@@ -1,0 +1,48 @@
+.root {
+  --title-color: var(--palette-pink);
+  --cols: 1;
+
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media screen and (min-width: 470px) {
+  .root {
+    --cols: 2;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .root {
+    --cols: 4;
+  }
+}
+
+.category {
+  background: var(--theme-card-bg-color);
+  padding: 1.3rem 1.3rem 1.8rem;
+  border: 1px solid var(--theme-card-bg-color);
+  border-radius: 15px;
+}
+
+.category.active {
+  text-decoration: none;
+  border-color: var(--theme-button-primary-background-color);
+}
+
+.category:hover {
+  text-decoration: none;
+  background: var(--theme-card-bg-color-hover);
+}
+
+.title {
+  color: var(--title-color);
+  margin-bottom: 1rem;
+}
+
+.description {
+  margin: 0;
+  color: var(--theme-card-text-color);
+}

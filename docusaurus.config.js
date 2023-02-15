@@ -1,132 +1,349 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+const ssrTemplate = require("./src/internals/ssr.template")
+const consts = require("./src/config/consts")
+const customFields = require("./src/config/customFields")
+const markdownPlugins = require("./plugins/markdown-plugins")
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
-/** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  title: '木易跟打器',
+  tagline: 'macOS平台唯一的、可直接载文的跟打器',
+  url: `https://${consts.domain}`,
+  baseUrl: "/",
+  baseUrlIssueBanner: false,
+  favicon: "/img/favicon.png",
+  organizationName: "QuestDB",
+  projectName: "questdb",
+  customFields: customFields,
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "throw",
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  plugins: [
+    require.resolve("./plugins/fetch-latest-release/index"),
+    require.resolve("./plugins/fetch-repo/index"),
+    require.resolve("./plugins/remote-repo-example/index"),
+    require.resolve("./plugins/fetch-contributors-count/index"),
+    require.resolve("./plugins/webpack-ts/index"),
+    require.resolve("./plugins/optimize/index"),
+    require.resolve("./plugins/manifest/index"),
+    require.resolve("./plugins/delay-code-block-appearance"),
+    [
+      "@docusaurus/plugin-pwa",
+      {
+        pwaHead: [
+          {
+            tagName: "link",
+            rel: "manifest",
+            href: "/manifest.webmanifest",
+          },
+          {
+            tagName: "meta",
+            name: "theme-color",
+            content: "#21222c",
+          },
+          {
+            tagName: "meta",
+            name: "apple-mobile-web-app-capable",
+            content: "yes",
+          },
+          {
+            tagName: "meta",
+            name: "apple-mobile-web-app-status-bar-style",
+            content: "#21222c",
+          },
+        ],
+      },
+    ],
+    [
+      require.resolve("./plugins/blog"),
+      {
+        ...markdownPlugins,
+        blogSidebarCount: 10,
+        feedOptions: {
+          type: "all",
+          copyright: customFields.copyright,
+        },
+        showReadingTime: true,
+        postsPerPage: 1000,
+        blogPostComponent: require.resolve(
+          "./src/theme/BlogPostPage/index.tsx",
+        ),
+        blogTagsPostsComponent: require.resolve(
+          "./src/theme/BlogListPage/index.tsx",
+        ),
+      },
+    ],
+    ...[
+      process.env.POSTHOG_API_KEY
+        ? require.resolve("posthog-docusaurus/src/index.js")
+        : null,
+    ],
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    ...[
+      process.env.NODE_ENV === "development"
+        ? require.resolve("./plugins/click-through-debug-iframe")
+        : null,
+    ],
+  ].filter(Boolean),
+
+  themeConfig: {
+    posthog: {
+      apiKey: process.env.POSTHOG_API_KEY,
+    },
+    colorMode: {
+      defaultMode: "dark",
+      disableSwitch: false,
+      respectPrefersColorScheme: false,
+    },
+    image: "/img/og.gif",
+    // gtag: {
+    //   trackingID: "GTM-PVR7M2G",
+    //   anonymizeIP: true,
+    // },
+    prism: {
+      defaultLanguage: "questdb-sql",
+      additionalLanguages: [
+        "rust",
+        "csharp",
+        "julia",
+        "cpp",
+        "java",
+        "ebnf",
+        "ini",
+        "toml",
+        "ruby",
+        "php",
+      ],
+      theme: require("./src/internals/prism-github"),
+      darkTheme: require("./src/internals/prism-dracula"),
+    },
+    algolia: {
+      appId: "QL9L2YL7AQ",
+      apiKey: "2f67aeacbe73ad08a49efb9214ea27f3",
+      indexName: "questdb",
+    },
+    navbar: {
+      title: "木易跟打器",
+      logo: {
+        alt: "木易跟打器",
+        src: "/img/navbar/easy-typer.png",
+      },
+      items: [
+        // {
+        //   label: "Product",
+        //   position: "left",
+        //   href: "#",
+        //   items: [
+        //     {
+        //       label: "QuestDB Cloud",
+        //       to: "/cloud/",
+        //     },
+        //     {
+        //       label: "QuestDB Open Source",
+        //       to: "/get-questdb/",
+        //     },
+        //     {
+        //       label: "QuestDB Enterprise",
+        //       to: "/enterprise/",
+        //     },
+        //     {
+        //       label: "Use Cases",
+        //       to: "/use-cases/",
+        //     },
+        //     {
+        //       label: "Customers",
+        //       to: "/customers/",
+        //     },
+        //     {
+        //       label: "Roadmap",
+        //       href: `https://github.com/orgs/questdb/projects/1/views/5`,
+        //     },
+        //   ],
+        // },
+        {
+          label: "使用文档",
+          position: "left",
+          href: "#",
+          items: [
+            // {
+            //   label: "博客",
+            //   to: "/blog/",
+            //   activeBaseRegex: "/blog/?$",
+            // },
+            {
+              label: "快速开始",
+              to: "/blog/tags/tutorial/",
+              activeBaseRegex: "/blog/tags/tutorial/?$",
+            },
+            {
+              label: "发布记录",
+              to: "/community/",
+            },
+            {
+              label: "Slack Community",
+              to: customFields.slackUrl,
+            },
+          ],
+        },
+        {
+          label: "博客",
+          to: "/docs/",
+          position: "left",
+        },
+        {
+          href: 'https://typer.owenyang.top',
+          label: '跟打器',
+          position: "left",
+        },
+        {
+          label: "点个赞",
+          href: "https://github.com/owenyang0/easy-typer",
+          position: "right",
+          className: "header-github-link",
+          "aria-label": "GitHub repository",
+        },
+        {
+          href: 'https://tiger-code.com',
+          label: '虎码官网',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      links: [
+        {
+          title: "Product",
+          items: [
+            {
+              label: "Cloud",
+              to: "/cloud/",
+            },
+            {
+              label: "Open Source",
+              to: "/get-questdb/",
+            },
+            {
+              label: "Enterprise",
+              to: "/enterprise/",
+            },
+            {
+              label: "Pricing",
+              to: "/pricing/",
+            },
+            {
+              label: "Use Cases",
+              to: "/use-cases/",
+            },
+            {
+              label: "Customers",
+              to: "/customers/",
+            },
+            {
+              label: "Roadmap",
+              href: "https://github.com/orgs/questdb/projects/1/views/5",
+            },
+          ],
+        },
+        {
+          title: "Developers",
+          items: [
+            {
+              label: "Docs",
+              to: "/docs/",
+            },
+            {
+              label: "Tutorials",
+              to: "/blog/tags/tutorial/",
+            },
+            {
+              label: "Blog",
+              to: "/blog/",
+            },
+            {
+              label: "Discussions",
+              to: customFields.linenUrl,
+            },
+            {
+              label: "Join Slack",
+              to: customFields.slackUrl,
+            },
+            {
+              label: "Swag",
+              to: "/community/",
+            },
+          ],
+        },
+        {
+          title: "Company",
+          items: [
+            {
+              label: "About us",
+              to: "/about-us/",
+            },
+            {
+              label: "Careers",
+              to: "/careers/",
+            },
+          ],
+        },
+        {
+          title: "Social",
+          items: [
+            {
+              label: "Twitter",
+              href: customFields.twitterUrl,
+            },
+            {
+              label: "GitHub",
+              href: customFields.githubUrl,
+            },
+            {
+              label: "StackOverflow",
+              to: customFields.stackoverflowUrl,
+            },
+            {
+              label: "Linkedin",
+              href: customFields.linkedInUrl,
+            },
+            {
+              label: "YouTube",
+              to: customFields.videosUrl,
+            },
+            {
+              label: "Reddit",
+              href: customFields.redditUrl,
+            },
+          ],
+        },
+      ],
+    },
   },
-
   presets: [
     [
-      'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      "@docusaurus/preset-classic",
+      {
+        // blog is enabled through a custom plugin, so we disable it from preset
+        // ./plugins/blog/index.js
+        blog: false,
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          ...markdownPlugins,
+          sidebarPath: require.resolve("./sidebars.js"),
+          // editUrl: ({ docPath }) =>
+          //   `${customFields.websiteGithubUrl}/edit/master/docs/${docPath}`,
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+
+        sitemap: {
+          changefreq: "daily",
+          priority: 0.7,
+          trailingSlash: true,
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [require.resolve("./src/css/_global.css")],
         },
-      }),
+      },
     ],
   ],
+}
 
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        title: 'My Site',
-        logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
-        },
-        items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-    }),
-};
-
-module.exports = config;
+module.exports = {
+  ...config,
+  ssrTemplate: ssrTemplate(config),
+}

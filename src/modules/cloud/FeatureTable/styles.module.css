@@ -1,0 +1,109 @@
+.root {
+  --row-title-font-size: var(--font-size-small);
+  --first-col-width: 50%;
+  display: table; /* overriding global style which sets display: block for all tables :( */
+  background: var(--theme-card-secondary-bg-color);
+  border-radius: var(--theme-card-border-radius);
+}
+
+.root tr,
+.root td {
+  border: 0;
+}
+
+.root thead th {
+  border: 0;
+  border-bottom: 1px solid var(--ifm-color-primary);
+  padding: 1rem;
+  font-size: var(--row-title-font-size);
+  font-weight: var(--ifm-font-weight-bold);
+}
+
+.root thead th:first-child {
+  text-align: left;
+  width: var(--first-col-width);
+}
+
+.root tbody tr:not(:last-child) {
+  border-bottom: 1px solid #515466;
+}
+
+html[data-theme='light'] .root tbody tr:not(:last-child) {
+  border-bottom: 1px solid #c3cade;
+}
+
+.root tbody td:first-child {
+  text-align: left;
+  width: var(--first-col-width);
+}
+
+.root tbody td {
+  height: 3rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: var(--row-title-font-size);
+}
+
+html[data-theme='light'] .root tbody tr:nth-child(2n) {
+  background-color: #e6e8ef;
+}
+
+html[data-theme='light'] .root tbody tr:nth-child(2n+1) {
+  background-color: var(--ifm-table-stripe-background);
+}
+
+@media screen and (min-width: 800px) {
+  .root {
+    --row-title-font-size: var(--font-size-large);
+  }
+}
+
+.availableNew {
+  position: relative;
+}
+
+.availableNewLabel {
+  background: var(--palette-green);
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  transform: rotateZ(22deg);
+  padding: 0 0.3rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  opacity: 0.9;
+}
+
+.icon {
+  display: inline-flex;
+  vertical-align: middle;
+  height: 2.5rem;
+  width: 2.5rem;
+  background-repeat: no-repeat;
+  background-position: center 3px;
+}
+
+.iconCheck {
+  background-image: url("/img/pages/cloud/tick-white.svg?inline");
+}
+
+.iconClose {
+  background-image: url("/img/pages/cloud/close.svg?inline");
+}
+
+.link {
+  color: var(--palette-turquoise);
+  font-weight: var(--ifm-font-weight-bold);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  cursor: default;
+}
+
+.comingSoon {
+  font-size: 0.9rem;
+}

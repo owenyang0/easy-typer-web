@@ -1,0 +1,14 @@
+.highlights {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 996px) {
+  .highlights {
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0;
+  }
+}

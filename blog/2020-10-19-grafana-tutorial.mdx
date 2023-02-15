@@ -1,0 +1,344 @@
+---
+title: Build a monitoring dashboard with QuestDB and Grafana
+author: Joan Augsburger
+author_title: QuestDB Team
+author_url: https://github.com/jaugsburger
+author_image_url: https://avatars.githubusercontent.com/jaugsburger
+description:
+  Use Grafana with QuestDB to build a monitoring dashboard for visualization of
+  time series data.
+keywords:
+  - timeseries
+  - questdb
+  - grafana
+tags: [tutorial, grafana]
+image: /img/blog/shared/og-grafana.png
+
+---
+
+import Banner from "@theme/Banner"
+
+<Banner
+  alt="A dashboard showing several graphs with operationnal data"
+  height={433}
+  src="/img/blog/2020-10-19/banner.jpg"
+  width={650}
+>
+  Photo by <a href="https://unsplash.com/photos/JKUTrJ4vK00">Luke Chesser</a>{" "}
+  via <a href="https://unsplash.com">Unsplash</a>
+</Banner>
+
+In this tutorial, we will cover how to load demo data from `.CSV` files into
+QuestDB and to use this as a data source for a Grafana dashboard. The dashboard
+will have line charts as data visualizations that make use of aggregate SQL
+functions and Grafana global variables for sampling data based on dashboard
+settings.
+
+<!-- truncate -->
+
+## What is Grafana?
+
+Grafana is an open-source visualization tool consisting of a server that
+connects to one or more data-sources to retrieve data, which is then visualized
+by the user in a browser.
+
+The following three Grafana features will be used in this tutorial:
+
+1. **Data source** - this is how you tell Grafana where your data is stored and
+   how you want to access it. For this tutorial, we will have a QuestDB server
+   running which we will access via Postgres Wire using the PostgreSQL data
+   source plugin.
+2. **Dashboard** - A group of widgets that are displayed together on the same
+   screen.
+3. **Panel** - A single visualization which can be a graph or table.
+
+## Setup
+
+### Start Grafana
+
+```shell
+docker run -p 3000:3000 grafana/grafana
+```
+
+Once the Grafana server has started, you can access it via port 3000
+(`http://localhost:3000`). The default login credentials
+are as follows:
+
+```shell
+user:admin
+password:admin
+```
+
+### Start QuestDB
+
+The Docker version for QuestDB can be run exposing the port `8812` for the
+PostgreSQL connection and port `9000` for the web and REST interface:
+
+```shell
+docker run -p 8812:8812 -p 9000:9000 questdb/questdb
+```
+
+### Loading the dataset
+
+On our [live demo]({@demoUrl@}), uses 10+ years of taxi data. For this tutorial,
+we have a subset of that data, the data for the whole of February 2018. You can
+download the compressed dataset
+[from Amazon S3](https://s3-eu-west-1.amazonaws.com/questdb.io/datasets/grafana_tutorial_dataset.tar.gz):
+
+```shell
+curl https://s3-eu-west-1.amazonaws.com/questdb.io/datasets/grafana_tutorial_dataset.tar.gz > grafana_data.tar.gz
+tar -xvf grafana_data.tar.gz
+```
+
+There should be two datasets available as `.CSV` files:
+
+- `weather.csv`
+- `taxi_trips_feb_2018.csv`
+
+These can be imported via curl using the `/imp` REST entrypoint:
+
+```shell
+curl -F data=@taxi_trips_feb_2018.csv http://localhost:9000/imp
+curl -F data=@weather.csv http://localhost:9000/imp
+```
+
+## Creating your first visualization
+
+### Create a data source
+
+In Grafana, select to the cog icon to expand the **Configuration** menu, select
+**Data Sources** and click the **Add data source** button. Choose PostgreSQL
+plugin and configure it with the following settings:
+
+```
+host:localhost:8812
+database:qdb
+user:admin
+password:quest
+SSL mode:disable
+```
+
+If `localhost` cannot be resolved by the Grafana docker image, the local IP
+address of your machine should be used for the **host** field, e.g.
+`192.168.0.3:8812`.
+
+Note that Grafana does not validate that queries are read-only. This means it's
+possible to run queries such as `drop table x` in Grafana which would be
+destructive to a dataset.
+
+To protect against this, set a dedicated QuestDB instance **read-only mode** by
+setting the property `http.security.readonly=true` in your `server.conf`.
+Details of setting this configuration can be found on QuestDB's
+[configuration page](/docs/reference/configuration).
+
+To avoid unnecessary memory usage, it is also recommended to disable SELECT query
+cache by setting the property `pg.select.cache.enabled=false` in your `server.conf`.
+That's because Grafana does not use prepared statements when sending the queries
+and the query cache becomes much less efficient.
+
+### Create a dashboard and a panel
+
+Now that we have a data source and a dashboard, we can add a panel. Navigate to
+**+ Create** and select **Dashboard**:
+
+import Screenshot from "@theme/Screenshot"
+
+<Screenshot
+  alt="Screenshot of a new dashboard with a 'Add new panel' button"
+  src="/img/blog/2020-10-19/add-new-panel.png"
+/>
+
+The new panel has a graphing area on the top half of the window and a query
+builder in the bottom half:
+
+<Screenshot
+  alt="Screenshot of a blank panel after being created"
+  src="/img/blog/2020-10-19/blank-panel.png"
+/>
+
+Toggle the query editor to **text edit mode** by clicking the pencil icon or by
+clicking the **Edit SQL** button. The query editor will now accept SQL
+statements that we can input directly:
+
+<Screenshot
+  alt="Screenshot showing how to toggle text edit mode"
+  src="/img/blog/2020-10-19/toggle-text-edit.png"
+/>
+
+Paste the following query into the editor:
+
+```
+SELECT pickup_datetime AS time,
+       avg(trip_distance) AS distance
+FROM ('taxi_trips_feb_2018.csv' timestamp(pickup_datetime))
+WHERE $__timeFilter(pickup_datetime)
+SAMPLE BY $__interval
+```
+
+Click the time range selector above the chart and set the following date range:
+
+- Set the **From** value to `2018-02-07 00:00:00`
+- Set the **To** value to `2018-02-14 23:59:59` and click **Apply time range**
+
+We have built our first panel with aggregations:
+
+<Screenshot
+  alt="A panel showing the average distance traveled, filtered by taxi type and with dynamic sampling."
+  src="/img/blog/2020-10-19/first-panel.png"
+/>
+
+#### Query details
+
+To graph the average trip distance above, we use the `avg()` function on the
+`trip_distance` column. This function aggregates data over the specified
+sampling interval. If the sampling interval is **1-hour**, we are calculating
+the average distance traveled during each 1-hour interval. You can find more
+information on QuestDB
+[aggregate functions on our documentation](/docs/reference/function/aggregation).
+
+There are also 2 key Grafana-specific expressions used which can be identified
+by the `$__` prefix:
+
+`$__interval` This is a dynamic interval based on the time range applied to the
+dashboard. By using this function, the sampling interval changes automatically
+as the user zooms in and out of the panel.
+
+`$__timeFilter(pickup_datetime)` tells Grafana to send the start-time and
+end-time defined in the dashboard to the QuestDB server. Given the settings we
+have configured so far with our date range, Grafana translates this to the
+following:
+
+```
+pickupDatetime BETWEEN '2018-02-01T00:00:00Z' AND '2018-02-28T23:59:59Z'
+```
+
+These are **global variables** which can be used in queries and elsewhere in
+panels and dashboards. To learn more about the use of these variables, refer to
+the
+[Grafana reference documentation on Global variables](https://grafana.com/docs/grafana/latest/variables/variable-types/global-variables/#global-variables).
+
+
+:::note
+
+For existing Grafana query known issue, see [Known issues](/docs/third-party-tools/grafana/#known-issues).
+
+:::
+
+### Adding multiple queries
+
+You can add multiple queries to the same panel which will display multiple lines
+on a graph. To demonstrate this, separate the taxi data into two series, one for
+cash payments and one for card payments. The first query will have a default
+name of `A`
+
+```
+--Cash
+SELECT pickup_datetime AS time,
+       avg(trip_distance) AS cash
+FROM ('taxi_trips_feb_2018.csv' timestamp(pickup_datetime))
+WHERE $__timeFilter(pickup_datetime)
+AND payment_type IN ('Cash')
+SAMPLE BY $__interval
+```
+
+Click **+ Query** to add a second query (automatically labeled `B`) and paste
+the following in text mode:
+
+```
+--Card
+SELECT pickup_datetime AS time,
+       avg(trip_distance) AS card
+FROM ('taxi_trips_feb_2018.csv' timestamp(pickup_datetime))
+WHERE $__timeFilter(pickup_datetime)
+AND payment_type IN ('Card')
+SAMPLE BY $__interval
+```
+
+Both queries are now layered on the same panel with a green line for cash and a
+yellow line for card payments:
+
+<Screenshot
+  alt="A panel showing the average distance travelled, filtered by taxi type and with dynamic sampling."
+  src="/img/blog/2020-10-19/panel-filtering-by-taxi-type.png"
+/>
+
+We can see in this graph that the distance traveled by those paying with cards
+is longer than for those paying with cash. This could be due to the fact that
+users usually carry less cash than the balance in their card.
+
+Let’s add another panel:
+
+```
+SELECT
+pickup_datetime AS "time",
+count()
+FROM ('taxi_trips_feb_2018.csv' timestamp(pickup_datetime))
+WHERE $__timeFilter(pickup_datetime)
+SAMPLE BY $__interval;
+```
+
+This is what our query looks like when viewing a time range of 28 days:
+
+<Screenshot
+  alt="A panel showing the number of trips over a month using dynamic sampling."
+  src="/img/blog/2020-10-19/panel-count-of-taxi-trips-in-whole-month.png"
+/>
+
+Zooming in to a single day shows more detailed data points as we are sampling by
+Grafana's `$__interval` property:
+
+<Screenshot
+  alt="A panel showing the number of trips in a day using dynamic sampling."
+  src="/img/blog/2020-10-19/panel-count-of-taxi-trips-in-a-day.png"
+/>
+
+The daily cycle of activity is visible, with rides peaking in the early evening
+and reaching a low in the middle of the night.
+
+## ASOF JOIN
+
+`ASOF JOIN` allows us to join 2 tables based on timestamp where timestamps do
+not exactly match. To join the taxi trips data with weather data, enter the
+following query:
+
+```
+SELECT
+    pickup_datetime as "time",
+    avg(fare_amount) as fare_amount,
+    avg(rain1H) as rain1H
+FROM (('taxi_trips_feb_2018.csv' timestamp(pickup_datetime)) WHERE $__timeFilter(pickup_datetime))
+ASOF JOIN (weather.csv timestamp(timestamp))
+SAMPLE BY $__interval;
+```
+
+To view a selected week in February 2018, select the time range picker above the
+chart:
+
+- Set the **From** value to `2018-02-07 00:00:00`
+- Set the **To** value to `2018-02-14 23:59:59` and click **Apply time range**
+- Enable dual Y-axis in the option panel by using **Overrides**, simply
+  assgining different axis placements and units for fields `fare_amount` and
+  `rain1H`.
+
+<Screenshot
+  alt="Assign different placement and units respectively for average fare amount and hourly precipitation."
+  src="/img/blog/2020-10-19/enable-2nd-y-axis.png"
+/>
+
+In this graph, we have 2 series, in green we have the fare amount sampled
+dynamically, and in yellow we have the average precipitation per hour in
+millimeters. From the graph, it’s hard to say whether there is a correlation
+between rain and the amount spent on taxi rides.
+
+<Screenshot
+  alt="A panel showing taxi fares plotted against rain fall"
+  src="/img/blog/2020-10-19/panel-taxi-fares-and-rain.png"
+/>
+
+## Conclusion
+
+We have learned how to import time series data into QuestDB and build a
+dashboard with multiple queries in Grafana. If you like this content and want to
+see more tutorials about third-party integrations, let us know
+[in our Slack Community]({@slackUrl@}) or drop us a
+[star on GitHub]({@githubUrl@}).

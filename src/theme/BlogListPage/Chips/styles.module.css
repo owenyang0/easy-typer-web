@@ -1,0 +1,13 @@
+.root {
+  margin-bottom: 5rem;
+}
+
+.chip {
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}
+
+.linkToTags,
+.linkToTags:hover {
+  color: var(--palette-pink);
+}

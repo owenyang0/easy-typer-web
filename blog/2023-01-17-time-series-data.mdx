@@ -1,0 +1,218 @@
+---
+title: What Is Time-Series Data?
+author: Nicolas Hourcard
+author_title: Co-founder & CEO, QuestDB
+author_url: https://github.com/tris0laris
+author_image_url: https://avatars.githubusercontent.com/tris0laris
+description:
+  This article introduces time-series data and its applications and shows how a
+  time-series database is best suited to process this data type.
+image: /img/blog/2023-01-17/banner.jpg
+tags:
+  [time-series, time-series data, tsdb, time-series database, community, SQL]
+slug: time-series-data
+---
+
+import Banner from "@theme/Banner"
+import Screenshot from "@theme/Screenshot"
+
+<Banner
+  alt="Image of a compass."
+  height={433}
+  src="/img/blog/2023-01-17/banner.jpg"
+  width={650}
+>
+  Photo by <a href="https://unsplash.com/photos/uCMKx2H1Y38">AbsolutVision</a>{" "}
+  on <a href="https://unsplash.com">Unsplash</a>
+</Banner>
+
+This blog post covers the basics of time-series data and its most common use
+cases and applications. We introduce the time-series database category, which has
+seen an explosion in popularity since a decade ago.
+
+Additionally, we will cover the design and trade-offs for a time-series database
+and show how SQL can deal with time-series data workloads, using QuestDB's ANSI SQL syntax as an example.
+
+<!--truncate-->
+
+## Time-series data explained
+
+Time-series is a succession of data points ordered by time. Time-series data is
+often plotted on a chart where the x-axis is time and the y-axis is a metric
+that changes over time. For example, stock prices change every microsecond or
+even nanosecond, and the trend is best presented as time-series data.
+
+<Screenshot
+  alt="AAPL stock price over the last 5 years"
+  height={284}
+  src="/img/blog/2023-01-17/apple-stock.png"
+  title="Apple’s share price (daily) over the last 5 years: time-series data"
+  width={650}
+/>
+
+Time-series data has always been plentiful in financial services with
+fast-changing tick price data and in e-commerce/ad-tech to better understand
+user analytics. With the rise in connected devices, application monitoring, and
+observability, time-series data is now critical in nearly all fields. We list a
+couple of examples below:
+
+<Screenshot
+  alt="Table showing time series data use cases by segment"
+  height={327}
+  src="/img/blog/2023-01-17/useCases.png"
+  title="The primary use cases for time-series databases such as QuestDB"
+  width={650}
+/>
+
+Time-series data has several unique characteristics:
+
+- The amount of data created and processed is large.
+- The amount of data flowing from the source is often uninterrupted.
+- The volume is also unpredictable and can come with bursts of high volumes of
+  data incoming at irregular intervals. This is very common in financial
+  markets, with spikes of trading volume occurring after events, which are
+  difficult to predict.
+- Fresh data needs to be analyzed on the fly. Anomaly detection is a good
+  example.
+
+With the rise of time-series data, time series has been the fastest-growing
+database category for the past five years according to
+[DB-engines](https://db-engines.com/de/ranking/time+series+dbms).
+
+<Screenshot
+  alt="Chart showing the popularity of time-series databases since 2018 - the data is from db-engines.com"
+  height={290}
+  src="/img/blog/2023-01-17/popularity.png"
+  title="Popularity by database category since 2018"
+  width={650}
+/>
+
+## The design of a time-series database
+
+As use cases and the need for time series analysis are increasing exponentially, so is the amount of raw data itself. To
+better cope with the ever-growing amount of data, time-series databases emerged a decade ago. They focus on performance
+with fast ingests to process a higher number of data points. The trade-off is less stringent consistency guarantees,
+which are typically must-haves for OLTP workloads. 
+
+It is pretty common for time-series databases not to be ACID compliant. Unlike traditional databases in which older data
+entries are typically updated with the most recent data point to show the latest state, time-series databases
+continuously accumulate data points over time. This way, one can draw insights from the evolution of metrics to conclude
+meaningful insights from the data. 
+
+This is why TSDBs are optimized for write operations rather than updates. Once the data is stored in a database, most
+use cases require querying this data in real-time to uncover insights on the data quickly. DevOps teams will set
+real-time alerts to detect anomalies in server metrics such as CPU or memory. E-commerce websites need to understand
+buyers' behavior to gather new insights and optimize their stock. A fintech company will want to detect fraud as
+transactions occur.
+
+## Most important features and trade-offs for a time-series database
+
+Time-series databases are not optimized for OLTP workloads that typically include lots of regular update and delete
+operations. Those are better handled by relational databases such as PostgreSQL or MySQL. In contrast, time-series data
+is mostly an append-only workload with delete operations performed in batches on less recent data. With time-series, we
+are concerned the most about the recent data coming in that is being analyzed on the fly. 
+
+To better cater to these needs, time-series databases pack a set of features that makes them stand out from relational
+databases and other types. We provide a list of these must-have features for a TSDB. Then, we show how you can do this
+on QuestDB, an open-source time-series database with fast ingests and SQL queries. You can run the examples on the
+QuestDB demo site to check the query performance.
+
+- **Automated partitioning management**
+
+  Time partitions are created automatically as data arrives. In QuestDB, data is
+  partitioned by time (hourly, daily, weekly or monthly).
+  [Slicing the data by time partitions](/docs/concept/partitions/) makes
+  time-based queries more efficient. Time-based queries will only lift the
+  relevant time partitions from the disk rather than lifting the entire dataset.
+  Partitioning also allows having multiple tiers of storage, where older
+  partitions can be mounted into cold storage, which is cheaper and slower.
+
+- **Downsampling and interpolation**
+
+  Representing the data with a lower frequency. For example, shifting from a
+  daily view to a monthly view. In order to facilitate such queries with SQL and
+  make them less verbose, QuestDB built a native extension to ANSI SQL with the
+  keyword [`SAMPLE BY`](/docs/reference/sql/sample-by/). This SQL statement
+  slices the dataset by a time interval (15 minutes in our example below) and
+  runs aggregations for that time period. We can optionally fill values for
+  those periods for which we have no results (interpolation, fill with null,
+  default, etc.)
+
+  ```questdb-sql title="Running the VWAP of Bitcoin for every 15 minutes interval in the past day"
+  SELECT
+      timestamp,
+      sum(price * amount) / sum(amount) AS vwap_price,
+      sum(amount) AS volume
+  FROM trades
+  WHERE symbol = 'BTC-USD' AND timestamp > dateadd('d', -1, now())
+  SAMPLE BY 15m ALIGN TO CALENDAR;
+  ```
+
+- **Interval search**
+
+  Fast retrieving data over arbitrary intervals. For example, zooming into a
+  specific timeframe preceding a monitoring alert to better understand the
+  underlying cause in real-time. QuestDB’s
+  [`WHERE` filter](/docs/reference/sql/where/#symbol-and-string) and
+  [`IN` time modifier](/docs/reference/sql/where/#time-range) for timestamp
+  search is fast and efficient. The SQL query below retrieves all the data
+  points in June 2018 for the column `pickup_datetime`:
+
+  ```questdb-sql title="Retrieving data from the table ‘trips’, where the column ‘pickup_datatime’ happens during the month of June 2018"
+  SELECT * FROM 'trips'
+  WHERE pickup_datetime IN '2018-06';
+  ```
+
+- **Time series joins**
+
+  Align join time-series data from two different tables, which do not have
+  exactly matching timestamps. These are known as `ASOF` joins, which we have
+  elaborated in the [ASOF JOIN section](/docs/reference/sql/join/#asof-join) in
+  our documentation. Below, the two tables, `trips` and `weather`, each show
+  values for given timestamps. However, the timestamps for each table are not
+  equal. For each timestamp in `trips`, `ASOF` finds the nearest timestamp in
+  `weather` and shows the associated weather value in the result table:
+
+  ```questdb-sql title="Example of ASOF JOIN query between the tables ‘trips’ and ‘weather’ which have non-identical matching timestamps"
+  SELECT pickup_datetime, fare_amount, tempF, windDir
+  FROM (trips WHERE pickup_datetime IN '2018-06-01')
+  ASOF JOIN weather;
+  ```
+
+- **Most recent first**
+
+  With time-series data, the most recent data is often more likely to be
+  analyzed. QuestDB’s SQL language extension includes
+  [`LATEST ON`](/docs/reference/sql/latest-on/) to get the most recent view of a
+  record instantly. As data is ingested in chronological order, QuestDB starts
+  scanning from the bottom and can thus retrieve the data point fast.
+
+  ```questdb-sql title="Retrieving the most recent data points for BTC-USD and ETH-USD prices with LATEST ON."
+  SELECT * FROM trades
+  WHERE symbol in ('BTC-USD', 'ETH-USD')
+  LATEST ON timestamp PARTITION BY symbol;
+  ```
+
+- **Streaming ingestion protocols**
+
+  As time-series data is mostly machine data, it is produced and streamed to a
+  database in a continuous fashion. The ability to sustain streamed data rather
+  than in slow batches quickly becomes a must. The
+  [InfluxDB line protocol](/blog/2020/07/22/influxdb-lp-on-tcp/) is very
+  efficient and offers a lot of flexibility. For example, you can create new
+  columns on the fly without specifying a schema ahead of time.
+
+## Additional resources on time-series data
+
+To learn more about time-series data:
+
+- [Best Time Series Databases](https://www.g2.com/categories/time-series-databases)
+- [Time Series Database by Hazelcast](https://hazelcast.com/glossary/time-series-database/)
+- [DB-Engines Ranking of Time Series DBMS](https://db-engines.com/en/ranking/time+series+dbms)
+- [Code to the Moon featuring QuestDB](https://www.youtube.com/watch?v=A8uMF64rbS8&ab_channel=CodetotheMoon)
+
+To learn more about relevant projects:
+
+- [Visualizing the stock market structure](https://scikit-learn.org/stable/auto_examples/applications/plot_stock_market.html)
+- [Prophet: forecasting at scale](https://research.facebook.com/blog/2017/2/prophet-forecasting-at-scale/)
+- [A Guide to Time Series Forecasting in Python](https://builtin.com/data-science/time-series-forecasting-python)

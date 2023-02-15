@@ -1,0 +1,367 @@
+---
+title: Time Series Data Analytics with QuestDB and Cube.js
+author: Andrey Pechkurov
+author_title: QuestDB Engineering
+author_url: https://github.com/puzpuzpuz
+author_image_url: https://avatars.githubusercontent.com/puzpuzpuz
+description: Time Series Data Analytics with QuestDB and Cube
+keywords: [cube, cube.js, questdb, analytics, time series]
+tags: [tutorial, engineering, integration, ethereum, cube.js, analytics, time series]
+image: /img/blog/2022-04-26/cover.png
+---
+
+import Banner from "@theme/Banner"
+import Screenshot from "@theme/Screenshot"
+
+<Banner
+  alt="Time Series Data Analytics with QuestDB and Cube"
+  height={360}
+  src="/img/blog/2022-04-26/cover.png"
+  width={650}
+/>
+
+_This blog post is the outcome of collaboration between
+[Isha Terdal](https://github.com/ishaterdal) from Cube,
+[Andrey Pechkurov](https://github.com/puzpuzpuz) from QuestDB and
+[Yitaek Hwang](https://github.com/yitaek), a QuestDB contributor._
+
+Time series data has now become a critical part of the data applications
+landscape. In this blog, we'll take a look at how QuestDB and Cube work together
+to provide a time series data pipeline that is fast, consistent, and reliable.
+
+<!--truncate-->
+
+## What is QuestDB?
+
+[QuestDB](https://questdb.io) is a performant open-source database for time
+series data. Its codebase is optimized for storing and processing large amounts
+of time-stamped data efficiently through lightning-fast SQL queries.
+
+QuestDB also allows for integration with a variety of popular open source tools
+through the PostgreSQL wire protocol, and its use cases range from real-time
+analytics and monitoring to market/tick data and industrial telemetry.
+
+## What is Cube?
+
+[Cube](https://cube.dev) is a headless business intelligence platform that can
+organize all your data into a structured data model. Defining metrics upstream
+of your applications—so, for instance, defining the granularity of data
+observed—enables you to access the same data metrics across various
+applications, use cases, and teams.
+
+With Cube's data modeling capabilities, you can shorten your project timeline
+from weeks to hours. And, with its API-first approach, you can connect to your
+streamlined data via an API that best suits your application and infrastructure
+(whether it be a REST, GraphQL, or SQL API).
+
+## How QuestDB and Cube Work Together
+
+So there you have it—a structured data model built on top of a fast repository
+of time series data. QuestDB is optimized for slicing and dicing time-stamped
+data through its
+[SQL extensions](https://questdb.io/docs/concept/sql-extensions/). Cube also
+offers multiple ways of
+[pre-aggregating](https://cube.dev/docs/caching/using-pre-aggregations) data
+effectively by building a caching layer on top of your data to speed up
+performance of slow queries. Together, QuestDB and Cube have your time series
+data all set up for use downstream.
+
+## Exploring Crypto Prices with QuestDB and Cube
+
+Let's illustrate how the two app stacks work together. In this example, we'll
+show how you can efficiently build an end-to-end crypto price analysis platform
+with QuestDB and Cube. We will use Cube to expose time series data in QuestDB
+via multiple APIs.
+
+<Screenshot
+  alt="A diagram of QuestDB's and Cube"
+  height={281}
+  src="/img/blog/2022-04-26/questdb-cube-railchart.png"
+  width={650}
+/>
+
+## Setting Up QuestDB and Importing Time Series Data
+
+First, you should set up a new project directory in your local system e.g.
+`questdb_cube`.
+
+We'll begin our demo by using the
+[Crypto dataset](https://www.kaggle.com/datasets/sudalairajkumar/cryptocurrencypricehistory)
+to show how we can create a time series database in QuestDB, and then organize
+the data downstream with Cube. Since both applications can be initiated using
+[Docker](https://docs.docker.com/get-docker/), let's start up both engines by
+stringing them together using Docker Compose.
+
+Then, create a docker-compose.yml file in the project directory with the
+following contents:
+
+```yaml
+version: "2.2"
+
+services:
+  cube:
+    environment:
+      - CUBEJS_DEV_MODE=true
+    image: "cubejs/cube:latest"
+    ports:
+      - "4000:4000"
+    volumes:
+      - ".:/cube/conf"
+  questdb:
+    container_name: questdb
+    hostname: questdb
+    image: "questdb/questdb:latest"
+    ports:
+      - "9000:9000"
+      - "8812:8812"
+```
+
+Add an .env file that gives Cube the details for connecting to QuestDB:
+
+```txt
+CUBEJS_DB_HOST=questdb
+CUBEJS_DB_PORT=8812
+CUBEJS_DB_NAME=qdb
+CUBEJS_DB_USER=admin
+CUBEJS_DB_PASS=quest
+CUBEJS_DB_TYPE=questdb
+```
+
+Run the containers using the following command:
+
+```bash
+docker-compose up -d
+```
+
+<Screenshot
+  alt="QuestDB docker image"
+  height={215}
+  src="/img/blog/2022-04-26/questdb-docker-image.png"
+  width={748}
+/>
+
+Navigate to `http://localhost:9000` to open QuestDB's Web
+Console, click on the “Upload” icon on the left-hand panel, and import the
+[csv files of interest](https://www.kaggle.com/sudalairajkumar/cryptocurrencypricehistory).
+While this example uses the Ethereum dataset, any of the coin datasets will work
+perfectly.
+
+<Screenshot
+  alt="QuestDB import view"
+  height={224}
+  src="/img/blog/2022-04-26/questdb-import-view.png"
+  width={700}
+/>
+
+Note: Cube works best with table names that do not contain any special
+characters. So, we're going to rename our table using the following command:
+
+```questdb-sql
+RENAME TABLE 'coin_Ethereum.csv' TO 'ethereum';
+```
+
+<Screenshot
+  alt="QuestDB web console"
+  height={224}
+  src="/img/blog/2022-04-26/questdb-web-console.png"
+  width={700}
+/>
+
+Now, we're able to query the data:
+
+<Screenshot
+  alt="QuestDB web console querying ethereum table"
+  height={224}
+  src="/img/blog/2022-04-26/ethereum-query.png"
+  width={700}
+/>
+
+## Building a Cube Data Model
+
+The next step is to organize the time series data from QuestDB in a uniform and
+accessible manner; we do this by defining a data model.
+
+The [Cube data model](https://cube.dev/docs/schema/fundamentals/concepts)
+consists of entities we call 'cubes' that define metrics by dimensions
+(qualitative categories) and measures (numerical values). So, with that in mind,
+let's continue by creating a cube for our Ethereum data.
+
+Navigate to `localhost:4000/#/schema` and click on the
+Ethereum table we imported into QuestDB:
+
+<Screenshot
+  alt="Generate Schema on Cube"
+  height={224}
+  src="/img/blog/2022-04-26/cube-generate-schema.png"
+  width={700}
+/>
+
+Clicking on the 'Generate Schema' button automatically bootstraps a cube for the
+data in our local project directory—a folder named 'schema'. This folder
+contains a file called 'Ethereum.js' that you can open with any text editor.
+
+By default, the `count` field falls under **measures**; name, symbol, and date
+fields are auto-populated as **dimensions**. Since we're interested in price
+columns, let's add them in (defined as 'high' and 'low' in the data model as
+shown below):
+
+```javascript
+cube(`Ethereum`, {
+  sql: `SELECT * FROM ethereum`,
+
+  measures: {
+    count: {
+      type: `count`,
+      drillMembers: [name, date],
+    },
+  },
+
+  dimensions: {
+    name: {
+      sql: `${CUBE}."Name"`,
+      type: `string`,
+    },
+
+    symbol: {
+      sql: `${CUBE}."Symbol"`,
+      type: `string`,
+    },
+
+    date: {
+      sql: `${CUBE}."Date"`,
+      type: `time`,
+    },
+
+    high: {
+      type: "number",
+      sql: `${CUBE}."High"`,
+    },
+
+    low: {
+      type: "number",
+      sql: `${CUBE}."Low"`,
+    },
+  },
+})
+```
+
+Then, by clicking on the 'Build' tab in Cube, we can see the data:
+
+<Screenshot
+  alt="Cube build tab"
+  height={224}
+  src="/img/blog/2022-04-26/cube-build-tab.png"
+  width={700}
+/>
+
+We can also use Cube's built-in measure type, `avg`, to create **measures** to
+calculate average high or low prices:
+
+```javascript
+measures: {
+  avgHigh: {
+    type: "avg",
+    sql: `${CUBE}."High"`,
+  },
+  avgLow: {
+    type: "avg",
+    sql: `${CUBE}."Low"`,
+  },
+},
+```
+
+Next, we can recreate the classic price-over-time graph:
+
+<Screenshot
+  alt="Price over time graph"
+  height={224}
+  src="/img/blog/2022-04-26/price-over-time-graph.png"
+  width={700}
+/>
+
+Additionally with Cube, you can pre-aggregate data to speed up the queries. Cube
+will create materialized rollups of specified dimensions and measures
+internally, and use aggregate awareness logic to route the queries. This logic
+will use the most optimal pre-aggregation available to serve the query instead
+of processing the raw dataset. You can define pre-aggregations within your data
+model as shown below.
+
+```js
+preAggregations: {
+  main: {
+    measures: [avgHigh, avgLow],
+    timeDimemsion: date,
+    granularity: "day"
+  }
+}
+```
+
+You can learn more about Cube
+[pre-aggregations in the documentation](https://cube.dev/docs/caching/pre-aggregations/getting-started).
+
+## Consuming Time Series Data via APIs
+
+If you've followed along so far, your data is now processed and organized neatly
+into a data model, aka a cube. So, what's next? Good question. The answer is
+simply to connect the data to your application.
+
+The versatility of Cube—given its 'headlessness'—enables you to seamlessly
+connect to any data application you need, whether it's a dashboard, notebook, or
+the backend of your application.
+
+By taking an API-first approach, Cube as a headless BI tool brings about endless
+ways of using your data downstream of your time series data sources. And, API
+endpoints ensure that the metrics are available and consistent across different
+applications, tools, and teams.
+
+Let's take a look at the various ways you can connect to the data model you
+built via its APIs.
+
+<Screenshot
+  alt="Various ways to connect with Cube"
+  height={224}
+  src="/img/blog/2022-04-26/cube-various-ways-to-connect.png"
+  width={700}
+/>
+
+There are three API endpoints that you can use to access your data model:
+
+1. REST API: If you're using Cube as the backend for your application, you can
+   connect to it with the [REST API](https://cube.dev/docs/rest-api).
+
+2. GraphQL API: If you're looking to use standard GraphQL queries for embedded
+   analytics or other data apps, you can connect to Cube with the
+   [GraphQL API](https://cube.dev/docs/backend/graphql).
+
+3. SQL API: If you're querying data using standard ANSI SQL format, you can
+   connect to Cube with the [SQL API](https://cube.dev/docs/backend/sql). No
+   need to learn additional syntax—just use SQL to interact with your data.
+   This is especially useful if you are working with BI tools, dashboards, or
+   data science models.
+
+<Screenshot
+  alt="GraphQL API"
+  height={224}
+  src="/img/blog/2022-04-26/graphql-api.png"
+  width={700}
+/>
+
+## Conclusion
+
+With QuestDB's speedy processing of time series data, and Cube's data modeling
+capabilities for consistent definitions, we can now efficiently power many use
+cases with real-time, reliable data. So, think embedded analytics, business
+intelligence, machine learning—you name it.
+
+Curious to see QuestDB's incredibly performant time series database in action?
+Check out the [QuestDB demo](https://demo.questdb.io). Eager to join the QuestDB
+discussion? Join the QuestDB community on
+[GitHub](https://github.com/questdb/questdb) and
+[Slack](https://slack.questdb.io/).
+
+Want to see how QuestDB and Cube can power your project together?
+[See the docs](https://cube.dev/docs/) and
+[create a free Cube Cloud account today](https://cube.dev/cloud). Have questions
+or feedback? [Drop us a line](https://cube.dev/contact),
+[join our Slack](https://slack.cube.dev/), or
+[check us out on GitHub](https://github.com/cube-js/).

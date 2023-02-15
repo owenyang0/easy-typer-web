@@ -1,0 +1,83 @@
+.root {
+  width: 100%;
+  background-color: var(--theme-section-odd-bg-color);
+  padding: 2rem;
+}
+
+.root.modal {
+  padding: 0;
+}
+
+.root h4 {
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  gap: 1rem;
+}
+
+.formTitle {
+  font-size: var(--font-size-big-3);
+  text-align: center;
+}
+
+.input {
+  padding: 0.5rem;
+  height: 40px;
+}
+
+.loader {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.submitBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.submit {
+  width: 100%;
+}
+
+.bookADemo {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-large);
+  margin-top: 1rem;
+}
+
+.bookADemo svg {
+  margin-top: 0.15rem;
+}
+
+.bookADemo svg path {
+  fill: var(--ifm-font-color-base);
+}
+
+.bookADemo span {
+  margin-left: 0.75rem;
+}
+
+.bookADemo a {
+  font-weight: var(--ifm-font-weight-semibold);
+}
+
+@media screen and (min-width: 600px) {
+  .root {
+    padding: 3.75rem;
+  }
+
+  .submitBlock {
+    flex-direction: row;
+  }
+
+  .submit {
+    margin-left: auto;
+  }
+}
+
+

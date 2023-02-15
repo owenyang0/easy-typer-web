@@ -1,0 +1,29 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 80px;
+  padding-top: 2rem;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #323440;
+  border-radius: 6px;
+  width: 100px;
+  height: 60px;
+}
+
+.selected {
+  border-color: #D14671;
+}
+.comingSoon {
+  font-size: 10px;
+}
+
+:global(html[data-theme="light"]) .image img {
+  filter: invert(1);
+}

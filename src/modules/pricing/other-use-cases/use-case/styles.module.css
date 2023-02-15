@@ -1,0 +1,45 @@
+.root {
+  --color-background: rgba(38, 40, 51, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  background: var(--color-background);
+  border-radius: 8px;
+  align-items: center;
+}
+
+@media screen and (min-width: 800px) {
+  .root {
+    flex-direction: row;
+    gap: 0;
+    align-items: center;
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+}
+
+.side {
+  display: flex;
+  gap: 1rem;
+}
+
+.side a {
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 800px) {
+  .side {
+    margin-left: auto;
+  }
+}
+
+:global(html[data-theme="light"]) .root {
+  --color-background: var(--theme-card-bg-color);
+}

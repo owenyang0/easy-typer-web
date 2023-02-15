@@ -1,0 +1,284 @@
+---
+title: "木易跟打器[1]-macOS上可直接载文的跟打器"
+author: 木易某某
+author_title: QuestDB Team
+author_url: https://github.com/owenyang0
+author_image_url: https://avatars.githubusercontent.com/jerrinot
+description: Introduction to the UUID data type and coordination-free unique IDs
+keywords:
+  - UUID
+  - distributed systems
+  - coordination-free
+  - keys
+tags: [UUID, keys, coordination-free, distributed systems]
+slug: easy-typer-working-in-macos-platform
+image: /img/blog/2023-02-10/banner.png
+---
+
+**木易跟打器**也叫 `mac跟打器` 或 `qq跟打器`，是由木易打造的当前macOS平台**唯一的**、可**直接载文**的跟打器。可通过macQQ直接群载文，计算跟打指标最终发送成绩至QQ群里，具有发文`复合指标`、历史数据`可视化`、轻便、准确、快捷等特点。
+
+<!--truncate-->
+
+import Banner from "@theme/Banner"
+
+<Banner
+  alt="A cloud image with multiple connections and several UUIDs in the background"
+  height={433}
+  src="https://typer.owenyang.top/img/logo-lanscape%402x.png"
+  width={650}
+></Banner>
+
+
+如未下载`mac客户端`也可直接通过网页访问进行本地练习，支持`击键`、`键准`等复合指标；根据字频提供前3500的单字练习文本，也可直接自定义练习文本，让打字练习如虎添翼。
+
+> 该工具是在笔者学习虎码(性能最优的形码)的过程中，开发并完善的。并为其提供了虎码学习者的专用练习文本
+
+
+:::note 相关信息
+* 下载地址：[https://typer.owenyang.top/download](https://typer.owenyang.top/download)
+* 版本记录：[https://typer.owenyang.top/changelog](https://typer.owenyang.top/changelog)
+:::
+
+
+
+
+
+本人是个五笔爱好者，也一直在使用五笔，曾经(差不多10年前了)也做过Windows平台的跟打器[易跟打Windows版](https://github.com/owenyang0/FollowTyperAndSender)。
+
+从 `Windows` 转到 `Mac` 之后，苦于`macOS`没有可用的跟打器，偶然看到了[QT](https://gitee.com/hotleave/quick-typing)基于他们的代码做一个`macOS`上可直接载文用的跟打器，外理了一些macOS系统的兼容，于是便有了这个项目。
+
+
+## A need for the unique identifier: using IoT as an example
+
+Let’s build an IoT application with weather sensors deployed around the globe.
+The sensors will collect data and we store the data along with the IDs of the
+sensors. We’ll run multiple database instances, and the sensors will write to
+the geographically closest database. All databases will regularly exchange data,
+so eventually, all the databases will have data from all the sensors.
+
+We need each sensor to have a globally unique ID. How can we achieve it? For
+example, we could run a service assigning sensor IDs as a part of the sensor
+installation procedure. It would mean additional architectural complexity, but
+it's doable. Sensor IDs are immutable, so each sensor needs to talk to the ID
+service only once - right after the installation. That’s not too bad.
+
+What if we need to store a unique ID for each data reading? Hitting the
+centralized ID service whenever we need to store data is not an option. That
+would stress the ID service too much and when the ID service is unavailable no
+sensor could write any data.
+
+What are the possible solutions?
+
+In the simplest case, each sensor could talk to the remote ID service and
+reserve a block of IDs it could then assign locally without further
+coordination. When it exhausts the block, it asks the ID service for a new one.
+This strategy would reduce the load on the ID service, and sensors could
+function even when the ID service is temporarily unavailable. We could also
+generate local reading IDs and prefix them with our unique immutable sensor ID.
+We could also be smart and use fancy ID algorithms like FlakeIDs.
+
+The strategies mentioned aim to minimize the need for coordination while still
+making sure that the IDs are unique globally. The goal is to generate unique IDs
+without any coordination at all. This is what we call coordination-free unique
+IDs.
+
+## UUID enters the scene
+
+Flip a coin 128 times and write down 1 for each head and 0 for each tail. This
+gives you a sequence of 128 1s and 0s, or 128 bits of randomness. That’s a space
+large enough that the probability of generating the same sequence twice is so
+extremely low that you can rule it out for practical purposes.
+
+How is that related to UUIDs? If you have ever seen a UUID then you know they
+look similar to this: `420cd09a-4d56-4749-acc2-40b2e8aa8c42`. This format is
+just a textual representation of 128 bits. How does it work? The UUID string has
+36 characters in total. If we remove the 4 dashes, which are there just to make
+it a bit more human-readable, we are left with 32 hexadecimal digits: 0-F. Each
+digit represents 4 bits and 32 \* 4 bits = 128 bits. So UUIDs are 128-bit
+values. We often represent them as strings, but that's just a convenience.
+
+UUID has been explicitly designed to be unique and generated without
+coordination. When you have a good random generator then 128 random bits are
+enough to practically guarantee uniqueness. At the same time, 128 bits are not
+too much, so UUIDs do not occupy too much space when stored.
+
+## UUID versions
+
+There are multiple versions of UUIDs. Versions 1 - 5 are defined in
+[RFC 4122](https://www.rfc-editor.org/rfc/rfc4122) and they are the most widely
+used. Versions 6 - 8 are currently in the
+[draft status](https://datatracker.ietf.org/doc/draft-ietf-uuidrev-rfc4122bis/),
+and they might be approved in the future. Let's take a brief look at the
+different versions.
+
+### Version 1
+
+Version 1 is generated by using a MAC address and time as inputs. The MAC
+address is used to ensure uniqueness across multiple machines. The time is used
+to ensure uniqueness across multiple processes on the same machine. The usage of
+the MAC means that generated UUIDs can be tracked to a specific machine. This
+can be useful occasionally, but it might not be desirable in other cases, as a
+MAC address can be considered private information.
+
+Interestingly enough, the time portion is not based on the usual Unix epoch, but
+it uses a count of 100-nanosecond intervals since 00:000:00.00 on the 15th of
+October 1582. What is special about October 1582? It's the
+[Gregorian calendar reform](https://en.wikipedia.org/wiki/Adoption_of_the_Gregorian_calendar).
+See version 7 for a UUID with a standard Unix epoch.
+
+### Version 2
+
+Version 2 is similar to version 1, but adds a local domain ID to the UUID. It's
+not widely used.
+
+### Versions 3 and 5
+
+These versions use a hash function to generate the UUID. The hash function is
+seeded with a namespace UUID and a name. The namespace UUID is used to ensure
+uniqueness across multiple namespaces. The name is used to ensure uniqueness
+within a namespace.
+
+Version 3 uses MD5 as a hash function, while version 5 uses SHA-1. SHA-1
+generates 160 bits so the digest is truncated to 128 bits.
+
+### Version 4
+
+Version 4 UUID is probably the most popular one. It relies solely on a random
+generator to generate UUIDs, it's similar to the coin flip example above. This
+means that the [quality of the random generator](https://xkcd.com/221/) is
+critical.
+
+### Version 6
+
+Version 6 is similar to Version 1, but it has a different ordering of bytes. It
+encodes the time from the most significant bits to the least significant bits.
+This allows sorting UUIDs correctly by time when you sort just bytes
+representing the UUIDs.
+
+### Version 7
+
+Version 7 uses a 48-bit timestamp and random data. Unlike versions 1, 2, or 6, it
+uses a standard Unix epoch in milliseconds. It also uses a random generator
+instead of a MAC address.
+
+### Version 8
+
+Version 8 is meant to be used for experimental and private use.
+
+## Security considerations
+
+UUIDs are designed to be unique, but they are not designed to be secret. What's
+the difference? If you generate a UUID then you can assume it's different from
+any other UUID generated before or after, but you should not treat them as a
+password or a secret session identifier. This is what the
+[RFC 4122](https://www.rfc-editor.org/rfc/rfc4122#page-16) says about this:
+
+> Do not assume that UUIDs are hard to guess; they should not be used as
+> security capabilities (identifiers whose mere possession grants access), for
+> example. A predictable random number source will exacerbate the situation.
+
+## UUID in QuestDB
+
+UUIDs are popular synthetic IDs because they can be generated without any
+coordination and do not use too much space. QuestDB users often store UUIDs, but
+until recently, QuestDB did not have first-class support. Most users stored
+UUIDs in a string column. It makes sense because as we have seen above UUIDs
+have a canonical textual representation.
+
+Storing UUIDs in a string column is possible, but it's inefficient. Let's do
+some math: We already know each UUID has 128 bits, that's 16 bytes. The
+canonical textual representation of UUID has 36 characters. QuestDB uses UTF-16
+encoding for strings, so each ASCII character uses 2 bytes. There is also a
+fixed cost of 4 bytes per string stored. So it takes 36 \* 2 + 4 = 76 bytes to
+store a single UUID which contains just 16 bytes of information! It's not just
+wasting disk space. QuestDB must read these bytes when evaluating a SQL
+predicate, joining tables or calculating an aggregation. Thus storing UUIDs as
+strings also makes your queries slower!
+
+That's why QuestDB 6.7 implemented
+[UUID](/docs/reference/sql/datatypes/#the-uuid-type) as a first-class data type.
+This allows user applications to declare a column as UUID and then each UUID
+stored will use only 16 bytes. Thanks to this, SQL queries will be faster.
+
+## Demo time
+
+Let’s create a table with a single string column and populate it with 1 billion
+random UUIDs. The column is defined as the string type so the UUIDs will be
+stored as strings:
+
+
+:::note
+The demo creates tables which in total occupy just under 100 GB of disk space. Make sure you have enough disk space available.
+You might also need to increase the query timeout via the `query.timeout.sec` property. See [Configuration](/docs/reference/configuration/) for more details. Alternatively, you can change the `long_sequence()` function to create a smaller number of rows.
+:::
+
+```questdb-sql
+CREATE TABLE tab_s (s string);
+
+INSERT INTO tab_s SELECT rnd_uuid4() FROM long_sequence(1000000000);
+```
+
+Let’s try to query it:
+
+```questdb-sql
+SELECT * FROM tab_s WHERE s = 'ab632aba-be36-43e5-a4a0-4895e9cd3f0d';
+```
+
+It’s taking around 2.2s. It’s not terrible given it’s a full-table scan over one
+billion strings, but we can do better! How much better? Let’s see. Create a new
+table with a UUID column:
+
+```questdb-sql
+CREATE TABLE tab_u (u uuid);
+```
+
+Populate it with UUID values from the first table:
+
+```questdb-sql
+INSERT INTO tab_u SELECT * FROM tab_s;
+```
+
+The newly created table has the same values as the first table, but the column
+is defined as UUID instead of string, so it eliminates the waste we discussed
+above. Let’s see how the predicate performs now:
+
+```sql
+SELECT * FROM tab_u WHERE u = 'ab632aba-be36-43e5-a4a0-4895e9cd3f0d';
+```
+
+This query takes around 380ms on my test box. That’s almost 6x better than the
+original 2.2 seconds! Speed is the key to any real-time analysis so this is
+certainly important.
+
+Let’s check disk space. The `du` command shows the space used by each table.
+First, the table with strings:
+
+```shell
+$ du -h
+79G    ./default
+79G    .
+```
+
+The table with UUID:
+
+```shell
+$ du -h
+15G    ./default
+15G    .
+```
+
+Declaring the column as UUID saved 64GB of disk space!
+
+Using UUID optimizes query performance and is cost-effective. Last but not
+least, predicates on UUID values will become even faster in future QuestDB
+versions as we are looking at how to vectorize them by using the SIMD
+instructions!
+
+## Conclusion
+
+We use UUIDs to generate globally unique IDs without any coordination. They are
+128 bits long so they do not use too much space. This makes them a good fit for
+distributed applications, IoT, cryptocurrencies, or decentralized finance.
+
+When your application stores UUIDs, tell your database it’s a UUID, do not store
+them in a string column. You will save disk space and CPU cycles.

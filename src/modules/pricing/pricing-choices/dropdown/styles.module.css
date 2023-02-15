@@ -1,0 +1,52 @@
+.root {
+  --color-background: rgba(50, 52, 64, 1);
+  --color-text: rgba(177, 181, 211, 1);
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.root select {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.root select:focus + .view {
+  outline: 1px solid #D14671;
+}
+
+.view {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  pointer-events: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+  border-radius: 6px;
+}
+
+.view:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 0.5rem;
+  top: 20%;
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1.5rem 1.5rem;
+  transform: rotateZ(180deg);
+  filter: var(--ifm-menu-link-sublist-icon-filter);
+}
+
+:global(html[data-theme="light"]) .root {
+  --color-background: #DDDEDF;
+  --color-text: #1E1E1E;
+}

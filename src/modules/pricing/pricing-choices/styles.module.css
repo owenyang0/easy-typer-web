@@ -1,0 +1,70 @@
+.root {
+  display: grid;
+  gap: 4rem 2rem;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "title"
+    "description"
+    "table"
+    "footer";
+}
+
+@media screen and (min-width: 1000px) {
+  .root {
+  grid-template-columns: 1fr 1.25fr;
+    grid-template-areas:
+      "title title"
+      "description table"
+      "footer footer";
+  }
+}
+
+.title {
+  grid-area: title;
+}
+
+.description {
+  grid-area: description;
+}
+
+.table {
+  grid-area: table;
+}
+
+.options {
+  display: grid;
+  gap: 1rem;
+  padding-top: 3rem;
+}
+
+.option {
+  display: grid;
+  grid-template-columns: auto;
+  align-items: center;
+}
+
+@media screen and (min-width: 1000px) {
+  .option {
+    gap: 1rem;
+    grid-template-columns: 80px auto;
+  }
+}
+
+.optionContent {
+  display: flex;
+  gap: 1rem;
+}
+
+.tableSubtext {
+  font-size: 14px;
+  color: #7f8085;
+}
+
+.footer {
+  grid-area: footer;
+  justify-self: center;
+}
+
+.highlighted {
+  color: #d14671;
+}

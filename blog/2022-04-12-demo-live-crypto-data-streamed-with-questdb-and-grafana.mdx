@@ -1,0 +1,192 @@
+---
+title: Demo of live crypto data streamed with QuestDB and Grafana
+author: Nicolas Hourcard
+author_title: QuestDB Team
+author_url: https://github.com/tris0laris
+author_image_url: https://avatars.githubusercontent.com/tris0laris
+description: Demo of live crypto data streamed with QuestDB and Grafana
+keywords:
+  - crypto
+  - bitcoin
+  - timeseries
+  - coinbase
+  - grafana
+  - sql
+tags: [demo, crypto, bitcoin, coinbase, grafana, opensource, candlestick]
+image: /img/blog/2022-04-12/cover.png 
+---
+import Banner from "@theme/Banner"
+import Grafana from "@theme/Grafana"
+import DemoConsoleButton from "@theme/DemoConsoleButton"
+
+<Banner
+  alt="Live crypto data ingested in QuestDB and displayed on Grafana"
+  height={360}
+  src="/img/blog/2022-04-12/cover.png"
+  width={650}
+/>
+
+At QuestDB we are all about performance. To showcase querying capabilities of
+the database we have been running a live demo of historical taxi rides in NYC with 1.6 billion rows  <sup>[1]</sup> and a geospatial dataset that contains the locations of 250k unique ships <sup>[2]</sup> moving over time. You can analyze this dataset with SQL on our [live instance](https://demo.questdb.io/) and see how fast each query is processed. Today, we introduce a new dataset on the same demo instance: crypto market
+data ingested in real-time from the Coinbase Exchange. For ingestion, we use a
+convenient Python library [Cryptofeed](https://github.com/bmoscon/cryptofeed), a
+cryptocurrency exchange feed handler that supports QuestDB. And for
+visualization, we use Grafana to create interactive live charts, which refresh
+every 5 seconds.
+
+<!--truncate-->
+
+We ingest the following columns into QuestDB in real-time for each BTC-USD and
+ETH-USD trades coming through the Coinbase Exchange:
+
+- price
+- side (buy/sell)
+- amount
+- timestamp
+
+To get you started, we added a set of example queries in the live demo of
+QuestDB web console. These pre-written queries leverage the standard SQL syntax
+and time-series SQL extensions in QuestDB. When clicking on a query, it's
+automatically added to the SQL editor. Then, click the <kbd>Run</kbd> button or
+press <kbd>F9</kbd> to execute the query. Despite the large amount of data
+stored on the demo instance, the queries should come back in milliseconds!
+
+Let's go through these sample queries one by one.
+
+## Last prices of BTC and ETH
+
+To find out the latest prices of BTC and ETH in USD. We use the
+[`LATEST ON`](https://questdb.io/docs/reference/sql/latest-on) syntax, which is
+native to QuestDB's SQL Engine:
+
+<p>
+
+  ```questdb-sql title="Latest BTC and ETH prices"
+  SELECT * FROM trades
+  WHERE symbol in ('BTC-USD', 'ETH-USD')
+  LATEST ON timestamp PARTITION BY symbol;
+  ```
+
+  <DemoConsoleButton
+    href="https://demo.questdb.io/?query=SELECT%20%2a%20FROM%20trades%0AWHERE%20symbol%20in%20%28%27BTC-USD%27%2C%20%27ETH-USD%27%29%0ALATEST%20ON%20timestamp%20PARTITION%20BY%20symbol%3B"
+  />
+</p>
+
+Below is a real-time chart for Bitcoin and Ethereum prices with a time sample of 10
+seconds.
+
+<Grafana src="https://dashboard.questdb.io/d-solo/624FG0snk/public-dashboard-1?orgId=1&panelId=10&refresh=5s" />
+
+## Candle chart sampled by time
+
+This query returns open, close, minimal and maximal prices as well as cumulated
+volumes with 15-minute intervals. We use the
+[`SAMPLE BY`](https://questdb.io/docs/reference/sql/sample-by/) syntax, which
+aggregates time series data into homogeneous time chunks:
+
+<p>
+
+  ```questdb-sql title="Candle chart with 15-minute intervals"
+  SELECT 
+      timestamp,
+      first(price) AS open,
+      last(price) AS close,
+      min(price),
+      max(price),
+      sum(amount) AS volume
+  FROM trades
+  WHERE symbol = 'BTC-USD' AND timestamp > dateadd('d', -1, now())
+  SAMPLE BY 15m ALIGN TO CALENDAR;
+  ```
+
+  <DemoConsoleButton
+    href="https://demo.questdb.io/?query=SELECT%20%0A%20%20%20%20timestamp%2C%0A%20%20%20%20first%28price%29%20AS%20open%2C%0A%20%20%20%20last%28price%29%20AS%20close%2C%0A%20%20%20%20min%28price%29%2C%0A%20%20%20%20max%28price%29%2C%0A%20%20%20%20sum%28amount%29%20AS%20volume%0AFROM%20trades%0AWHERE%20symbol%20%3D%20%27BTC-USD%27%20AND%20timestamp%20%3E%20dateadd%28%27d%27%2C%20-1%2C%20now%28%29%29%0ASAMPLE%20BY%2015m%20ALIGN%20TO%20CALENDAR%3B"
+  />
+</p>
+
+This real-time chart on Grafana plots the candle chart with a time sample of 10
+seconds. We also show the volume traded on a secondary axis.
+
+<Grafana src="https://dashboard.questdb.io/d-solo/624FG0snk/public-dashboard-1?orgId=1&panelId=8&refresh=5s" />
+
+## VWAP Bitcoin price sampled by time
+
+For each 15 minutes interval, we calculate the average price of BTC-USD adjusted
+for the volume of trades during that period. This query includes the
+[`WHERE`](https://questdb.io/docs/reference/sql/where/) clause that is
+accelerated by our new JIT Compiler (see the _lightning_ in the logs). And once
+again, we downsample the dataset using `SAMPLE BY`.
+
+<p>
+
+  ```questdb-sql title="Volume-weighted average price"
+  SELECT 
+      timestamp,
+      sum(price * amount) / sum(amount) AS vwap_price,
+      sum(amount) AS volume
+  FROM trades
+  WHERE symbol = 'BTC-USD' AND timestamp > dateadd('d', -1, now())
+  SAMPLE BY 15m ALIGN TO CALENDAR;
+  ```
+
+  <DemoConsoleButton
+    href="https://demo.questdb.io/?query=SELECT%20%0A%20%20%20%20timestamp%2C%0A%20%20%20%20sum%28price%20%2a%20amount%29%20%2F%20sum%28amount%29%20AS%20vwap_price%2C%0A%20%20%20%20sum%28amount%29%20AS%20volume%0AFROM%20trades%0AWHERE%20symbol%20%3D%20%27BTC-USD%27%20AND%20timestamp%20%3E%20dateadd%28%27d%27%2C%20-1%2C%20now%28%29%29%0ASAMPLE%20BY%2015m%20ALIGN%20TO%20CALENDAR%3B"
+  />
+</p>
+
+The following real-time chart displays the distribution of trades based on their
+size and paints a more granular picture of volume traded.
+
+<Grafana src="https://dashboard.questdb.io/d-solo/624FG0snk/public-dashboard-1?orgId=1&panelId=12&refresh=5s" />
+
+## Implied BTC-ETH exchange rate
+
+The two series of prices for BTC-USD and ETH-USD have different unique
+timestamps. In order to join these two series where timestamps do not exactly
+match, use the `ASOF JOIN` syntax and then divide the price of BTC-USD with the
+price of ETH-USD to get the implied BTC/ETH rate.
+
+<p>
+
+  ```questdb-sql title="Implied BTC-ETH exchange rate"
+  WITH btc AS (
+    SELECT timestamp AS x, price AS btcusd
+    FROM trades
+    WHERE symbol = 'BTC-USD' AND timestamp > dateadd('m', -30, now())
+  ),
+  eth AS (
+    SELECT timestamp AS y, price AS ethusd
+    FROM trades
+    WHERE symbol = 'ETH-USD' AND timestamp > dateadd('m', -30, now())
+  )
+  SELECT
+    x AS time,
+    btcusd / ethusd AS crossPrice,
+    btcusd,
+    ethusd
+  FROM btc
+  ASOF JOIN eth;
+  ```
+
+  <DemoConsoleButton
+    href="https://demo.questdb.io/?query=WITH%20btc%20AS%20%28%0A%20%20SELECT%20timestamp%20AS%20x%2C%20price%20AS%20btcusd%0A%20%20FROM%20trades%0A%20%20WHERE%20symbol%20%3D%20%27BTC-USD%27%20AND%20timestamp%20%3E%20dateadd%28%27m%27%2C%20-30%2C%20now%28%29%29%0A%29%2C%0Aeth%20AS%20%28%0A%20%20SELECT%20timestamp%20AS%20y%2C%20price%20AS%20ethusd%0A%20%20FROM%20trades%0A%20%20WHERE%20symbol%20%3D%20%27ETH-USD%27%20AND%20timestamp%20%3E%20dateadd%28%27m%27%2C%20-30%2C%20now%28%29%29%0A%29%0ASELECT%0A%20%20x%20AS%20time%2C%0A%20%20btcusd%20/%20ethusd%20AS%20crossPrice%2C%0A%20%20btcusd%2C%0A%20%20ethusd%0AFROM%20btc%0AASOF%20JOIN%20eth%3B"
+  />
+</p>
+
+The following real-time chart plots three series: BTC-USD, ETH-USD and the
+implied BTC-ETH cross price.
+
+<Grafana src="https://dashboard.questdb.io/d-solo/624FG0snk/public-dashboard-1?orgId=1&panelId=14&refresh=5s"/>
+
+## Conclusion
+
+We hope you find these example queries and charts useful to get started. Let us
+know about other useful queries you build on our demo server! If you're
+interested in setting up something similar within your organizations or for
+personal projects, you can get started on
+[GitHub](https://github.com/questdb/questdb#try-questdb) or join our community
+on [Slack]({@slackUrl@}).
+
+[1]: https://news.ycombinator.com/item?id=23616878
+[2]:
+  https://www.reddit.com/r/programming/comments/q1vnfi/demo_geospatial_and_timeseries_queries_on_250k/

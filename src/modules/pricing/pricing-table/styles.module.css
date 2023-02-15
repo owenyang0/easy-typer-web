@@ -1,0 +1,54 @@
+.root {
+  --cell-padding: 0.5rem 1rem;
+  --color-header-background: rgba(61, 63, 77, 0.52);
+  --color-border: rgba(50, 52, 64, 1);
+  --color-dimmed: #B1B5D3;
+  display: table;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 1000px) {
+  .root {
+    --cell-padding: 0.5rem 2rem;
+  }
+}
+
+.root,
+.root tr,
+.root th,
+.root td {
+  border: 0;
+}
+
+.root tr:last-child {
+  border: 0;
+}
+
+.root tr {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.root thead th {
+  padding: var(--cell-padding);
+  text-align: left;
+  font-size: 1rem;
+  color: rgba(243, 81, 131, 1);
+  background: var(--color-header-background);
+}
+
+.root tbody td {
+  padding: var(--cell-padding);
+}
+
+.dimmed {
+  color: var(--color-dimmed);
+  font-size: 14px;
+}
+
+:global(html[data-theme="light"]) .root {
+  --color-header-background: var(--theme-card-bg-color);
+  --color-border: #D7D8DA;
+  --color-dimmed: #8E91A9;
+}

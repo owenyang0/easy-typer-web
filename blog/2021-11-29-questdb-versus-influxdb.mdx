@@ -1,0 +1,331 @@
+---
+title: Comparing InfluxDB and QuestDB databases
+author: Brian Smith
+author_title: QuestDB Team
+author_url: https://github.com/bsmth
+author_image_url: https://avatars.githubusercontent.com/bsmth
+description:
+  An overview of InfluxDB versus QuestDB to compare features, functionality,
+  performance, and ease of use.
+keywords:
+  - timeseries
+  - influxdb
+  - questdb
+  - comparison
+  - database
+tags: [tutorial, benchmark, influxdb, comparison]
+image: /img/blog/shared/og-influxdb.png
+---
+
+# Comparing QuestDB and InfluxDB time series databases
+
+import Screenshot from "@theme/Screenshot"
+
+<Screenshot
+  alt="Summary of benchmarking results of InfluxDB compared to QuestDB"
+  height={385}
+  src="/img/blog/2021-11-29/banner.png"
+  width={850}
+/>
+
+Time-series data is emerging as the dominant type of data produced in IoT,
+Financial Services, Manufacturing, DevOps, monitoring, machine learning, and AI.
+Time series databases are specialized for storing and analyzing this kind of
+data efficiently and quickly. This article compares QuestDB with InfluxDB to
+help understand the key differences so you can choose a time series database
+that fits your use case.
+
+The typical uses of time series databases are for:
+
+- Application performance, uptime, and response times
+- Analyzing financial transactions and trades
+- Monitoring network logs
+- Asset tracking
+- E-commerce transaction data, sales insights, BI reports
+- Sensor data from IoT devices
+
+While the traditional use of databases was to store the last-known state of a
+system, this only shows a snapshot of a point in time. In contrast, time series
+data adds a historical dimension to help understand how information changes.
+
+Understanding how information changes over time help make predictions about your
+data, gain deeper insights into trends, and be better prepared for future
+variations. For this reason, developers need a time-series database that's
+robust, easy to use, and powerful. Importantly, it must be flexible enough to be
+used across different scenarios, industries, and use cases.
+
+## What are the data models used in InfluxDB and QuestDB
+
+One of the first places to begin comparing QuestDB and InfluxDB is how data is
+handled and stored in each database. InfluxDB has a dedicated **line protocol**
+message format for ingesting measurements. Each measurement has a timestamp, a
+set of tags (a tagset), and a set of fields (a fieldset).
+
+```txt
+measurementName,tagKey=tagValue fieldKey="fieldValue" 1465839830100399000
+--------------- --------------- --------------------- -------------------
+       |               |                  |                    |
+  Measurement         Tags              Fields             Timestamp
+```
+
+In InfluxDB, tagset values are strings and are indexed, while fieldset values
+are not indexed. The data types that fields may use are limited to floats, ints,
+strings, and booleans. The following snippet is an example message in InfluxDB
+line protocol for illustration:
+
+```
+sensors,location=london,version=REV-2.1 temperature=22,humidity=50 1465839830100399000\n
+```
+
+QuestDB supports InfluxDB line protocol for compatibility purposes, so inserts
+using InfluxDB line protocol match the data types available. QuestDB supports
+additional numeric types, such as bytes for 8-bit integers, shorts for 16-bit
+integers, float for 32-bit floats, and long256 for larger integers. Additional
+types can be used while ingesting InfluxDB line protocol by creating a table
+with a desired schema before starting to write data.
+
+QuestDB also exposes PostgreSQL wire protocol and a REST API for inserts,
+allowing for more control over the data types that the system can handle,
+including additional types such as date, char, and binary. In QuestDB, it's also
+possible to add indexes and to existing columns in tables, which can be done
+directly through SQL:
+
+```questdb-sql
+ALTER TABLE sensors ALTER COLUMN firmware ADD INDEX;
+```
+
+QuestDB has full support for relational queries, whereas InfluxDB is a NoSQL,
+non-relational database with a custom data model. QuestDB supports both
+schema-agnostic ingestion over InfluxDB line protocol and a relational data
+model. Users can leverage both paradigms and perform SQL JOINs to correlate
+"schemaless" data with relational data by timestamp.
+
+<Screenshot
+  alt="A combination of schema-agnostic ingestion and relational data stored and queried in QuestDB"
+  height={385}
+  src="/img/blog/2021-11-29/relational-and-schema-agnostic.png"
+  width={850}
+/>
+
+## Comparing database storage models
+
+For storage, InfluxDB uses Time-Structured Merge Trees (TSM) where data is
+stored in a columnar format, and the storage engine stores differences (or
+_deltas_) between values in a series. For indexing, InfluxDB uses a Time Series
+Index intended to keep queries fast as cardinality grows. Still, the efficiency
+of this index has its limitations, explored in more detail in the
+High-Cardinality section below.
+
+QuestDB also uses columnar data structures but indexes data in vector-based
+append-only column files. As of QuestDB version 6.0, sorting out-of-order data
+occurs in a staging area in-memory, merging sorted and persisted data at commit
+time using an append model. The reason for sorting in-memory and merging with
+persisted data in this way is to keep the storage engine performant on both read
+and write operations.
+
+InfluxDB has a shard group concept as a strategy for partitioning, which allows
+for grouping data by time. Users can provide a
+[shard group duration](https://docs.influxdata.com/influxdb/v2.0/reference/internals/shards/#shard-group-duration)
+which defines how large a shard will be and can enable common operations such as
+retention periods for data (deleting data older than X days, for example):
+
+<Screenshot
+  alt="An illystration of shard groups in InfluxDB"
+  height={385}
+  src="/img/blog/2021-11-29/shard-groups.png"
+  width={850}
+/>
+
+QuestDB has similar functionality to partition tables by time, and users may
+specify a partition size for tables based on days, months, or years. When tables
+are partitioned by time, table metadata table is defined once per table, and
+column files are partitioned at the filesystem level into directories per
+partition:
+
+<Screenshot
+  alt="A diagram showing the column-based storage model of QuestDB"
+  height={385}
+  src="/img/blog/2021-11-29/questdb-storage-model.png"
+  width={850}
+/>
+
+Both QuestDB and InfluxDB have ways to partition data by time and employ a
+retention strategy. The difference in partitioning for each system is the
+broader terminology, and the fact that QuestDB does not need to create
+[separate TSM files on disk](https://docs.influxdata.com/influxdb/v2.0/reference/internals/shards/#shards)
+per partition.
+
+## Ease of use of SQL compared to custom query languages
+
+The emergence of NoSQL as a popular paradigm has effectively split databases
+into two categories: SQL and NoSQL. InfluxDB originally started with a language
+similar to SQL called InfluxQL, which balanced some aspects of SQL with custom
+syntax. InfluxDB eventually adopted Flux as a query language to interact with
+data.
+
+QuestDB embraces SQL as the primary query language so that there is no need for
+learning custom query languages. SQL is a good choice for time-series databases;
+it's easy to understand, most developers are familiar with it already, and SQL
+skills are simple to apply across different systems. As reported by the Stack
+Overflow developer survey of 2020, it's the third most popular language used by
+developers. It proves to be a long-standing choice for quickly asking questions
+about the characteristics of your data.
+
+Flux enables you to work with InfluxDB more efficiently, but it's difficult to
+read, and it's harder to learn and onboard new users. From users' perspective,
+learning a new custom query language is inconvenient for accessibility
+regardless of their engineering background.
+
+```javascript
+from(bucket:"example-bucket")
+  |> range(start:-1h)
+  |> filter(fn:(r) =>
+    r._measurement == "cpu" and
+    r.cpu == "cpu-total"
+  )
+  |> aggregateWindow(every: 1m, fn: mean)
+```
+
+Consider that the Flux query above can be written in SQL as follows:
+
+```questdb-sql
+SELECT avg(cpu), avg(cpu-total) FROM 'example-bucket'
+WHERE timestamp > dateadd('h', -1, now())
+SAMPLE BY 1m
+```
+
+Users who have no developer background will have a barrier of entry, making it
+difficult to use standard BI tools to gain insights on time series data. SQL is
+a time-tested language that those without engineering backgrounds can pick up
+quickly.
+
+## Measuring time series database performance
+
+Let's compare how QuestDB and InfluxDB operate in terms of performance. The
+[Time Series Benchmark Suite](https://github.com/timescale/tsbs) (TSBS)
+regularly appears in discussions about database performance. The TSBS is a
+collection of Go programs to generate datasets and then benchmark read and write
+performance. The suite is extensible so that different use cases and query types
+can be included and compared across systems. To generate data for these
+benchmarks, commands look like the following:
+
+```bash
+# Generating the dataset
+tsbs_generate_data --seed=123 --scale=4000 \
+  --timestamp-start="2016-01-01T00:00:00Z" --timestamp-end="2016-01-02T00:00:00Z" \
+  --log-interval="10s" --use-case="cpu-only" --format="influx" > /tmp/bigcpu
+# Loading the data
+tsbs_load_questdb --file /tmp/bigcpu --workers 4
+```
+
+The data produced from `tsbs_generate_data` above has the following features:
+
+- 4000 unique devices (scale)
+- 500MB data set
+- 24 hours worth of simulated data
+- InfluxDB line protocol
+
+This is an example of the first few lines from the generated data set:
+
+```txt
+"hostname","region","datacenter","rack","os","arch","team","service","service_version","service_environment","usage_user","usage_system","usage_idle","usage_nice","usage_iowait","usage_irq","usage_softirq","usage_steal","usage_guest","usage_guest_nice","timestamp"
+"host_0","eu-central-1","eu-central-1a","6","Ubuntu15.10","x86","SF","19","1","test",58,2,24,61,22,63,6,44,80,38,"2016-01-01T00:00:00.000000Z"
+"host_1","us-west-1","us-west-1a","41","Ubuntu15.10","x64","NYC","9","1","staging",84,11,53,87,29,20,54,77,53,74,"2016-01-01T00:00:00.000000Z"
+"host_2","sa-east-1","sa-east-1a","89","Ubuntu16.04LTS","x86","LON","13","0","staging",29,48,5,63,17,52,60,49,93,1,"2016-01-01T00:00:00.000000Z"
+```
+
+QuestDB reaches maximum ingestion performance using four threads, whereas
+InfluxDB requires more workers to hit maximum throughput. QuestDB achieves 959k
+rows/sec with four threads, whereas InfluxDB needs 14 threads to reach its max
+ingestion rate (334k rows/sec).
+
+<Screenshot
+  alt="Ingestion results comparing QuestDB and InfluxDB using the time series benchmark suite"
+  height={385}
+  src="/img/blog/2021-11-29/timeseries-benchmark-suite-results.png"
+  width={650}
+/>
+
+## How high-cardinality impacts ingestion rates
+
+Cardinality typically refers to the number of elements in a set's size. In the
+context of a time series database (TSDB), high-cardinality boils down to many
+indexed columns in a table and each indexed column containing many unique
+values.
+
+High-cardinality is a known problem area for InfluxDB, and this is likely
+because of the system architecture and storage engine. InfluxDB uses data
+structures based on LSM-trees which are known to perform poorly in
+high-cardinality scenarios. In QuestDB, the storage model is radically different
+from LSM trees or B-trees and instead uses data stored in densely ordered
+vectors on disk.
+
+We ran the TSBS benchmark specifying different scale values for multiple data
+sets and tested ingestion using up to sixteen threads to determine the maximum
+throughput of each system and to get an idea of how ingestion rates change over
+time:
+
+<Screenshot
+  alt="High-cardinality results comparing QuestDB and InfluxDB using the time series benchmark suite"
+  height={385}
+  src="/img/blog/2021-11-29/timeseries-benchmark-high-cardinality.png"
+  width={850}
+  title="TSBS load benchmark maximum throughput results on AWS m5.8xlarge instance (4 threads)"
+/>
+
+With low cardinality data sets, QuestDB hits maximum ingestion throughput of
+904k rows/sec, and at 10 million unique devices, QuestDB sustains 640k rows/sec.
+InfluxDB ingestion starts at 220k rows/sec on 100 devices and reached 38k
+rows/sec on the 10M device dataset.
+
+As we ran high-cardinality data sets, InfluxDB struggled to keep up with
+inserts. The bottleneck is likely due to the use of Time-Structured Merge Trees.
+The issues manifested at first in degraded ingestion rates, but eventually,
+out-of-memory errors begin to appear at runtime. We provided more workers to the
+systems under test to investigate if adding more threads would offer more
+stability, however InfluxDB was unable to finish the tests with 10M devices:
+
+<Screenshot
+  alt="High-cardinality results comparing QuestDB and InfluxDB using the time series benchmark suite"
+  height={385}
+  src="/img/blog/2021-11-29/timeseries-benchmark-suite-throughput.png"
+  width={850}
+  title="TSBS load benchmark maximum throughput results on AWS m5.8xlarge instance (16 threads)"
+/>
+
+InfluxDB requires a lot more threads to be able to handle high-cardinality data,
+but there are diminishing returns on adding more workers, revealing that there
+are underlying barriers which are not overcome by providing more threads to the
+system.
+
+QuestDB handles high-cardinality better with more threads. When cardinality is
+low, fewer workers lead to an overall higher maximum throughput, but a steeper
+drop in ingestion rates when going from 1M devices to 10M.
+
+## Support and community
+
+The community is vital to QuestDB so that beginners have an environment that
+encourages getting up and running quickly. Experienced users have channels for
+raising technical questions or bugs with the engineering team or other power
+users. We have a growing Slack workspace with over 900 members who discuss how
+they are using QuestDB daily to power their businesses. Our mission is to solve
+the problems users have with time series data. To achieve that, we are driven to
+understand the pain points that arise from practical scenarios, and we have the
+community as a force that informs our product roadmap.
+
+We designed QuestDB to sidestep custom query languages that require specialist
+knowledge to understand. We believe that it should be easy to ask questions
+about how your own data looks and changes. Support, community forums, and online
+resources are a treasure trove of many decades of knowledge working with SQL
+which directly transfers to using QuestDB. If you are new to QuestDB (or SQL),
+it's easy to get started by means of online resources, tutorials, and the
+expertise shared by our community. For seasoned SQL experts, there is no
+learning curve except for time-based calculations and analysis specific for time
+series.
+
+## Choosing a database that fits
+
+We want to make sure engineers can pick the right tool for the job and have
+highlighted some key differentiators between QuestDB and InfluxDB. If there are
+suggestions for improving this comparison, we'd be happy to include this in our
+analysis.

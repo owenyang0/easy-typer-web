@@ -1,0 +1,5 @@
+.tables {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}

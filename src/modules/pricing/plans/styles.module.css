@@ -1,0 +1,37 @@
+.root {
+  --color-subtext: rgba(217, 217, 217, 0.51);
+}
+
+.title {
+  font-size: 1.3rem;
+}
+
+.plans {
+  --cols: 1;
+  --gap: 4rem;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(var(--cols), 380px);
+  align-items: flex-end;
+}
+
+@media screen and (min-width: 900px) {
+  .plans {
+    --cols: 3;
+    --gap: 2rem;
+  }
+}
+
+.plan {
+  display: grid;
+  gap: 1rem;
+}
+
+.subtext {
+  text-align: center;
+  color: var(--color-subtext);
+}
+
+:global(html[data-theme="light"]) .root {
+  --color-subtext: #8D8D8D;
+}
