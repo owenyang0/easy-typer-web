@@ -25,7 +25,7 @@ const useCases = [
     ],
     cta: {
       label: "更多功能",
-      url: "https://demo.questdb.io",
+      url: "https://typer.owenyang.top",
     },
   },
   {
