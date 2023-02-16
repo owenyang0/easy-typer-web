@@ -23,7 +23,7 @@ export const OtherUseCases = () => (
         }
       >
         <Button
-          to="/enterprise"
+          to="/"
           variant="tertiary"
           size="xsmall"
           uppercase={false}
@@ -51,7 +51,7 @@ export const OtherUseCases = () => (
           Live Demo
         </Button>
         <Button
-          to="/get-questdb"
+          to="/"
           variant="tertiary"
           size="xsmall"
           uppercase={false}

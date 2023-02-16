@@ -1,8 +1,8 @@
 {
-  "name": "questdb.io",
+  "name": "easy-typer-web",
   "version": "0.0.1",
   "private": true,
-  "license": "Apache-2.0",
+  "license": "MIT License",
   "scripts": {
     "start": "docusaurus start",
     "prebuild": "docusaurus clear && node ./scripts/cleanup-guidelines",

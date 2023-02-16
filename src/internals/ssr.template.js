@@ -7,11 +7,7 @@ module.exports = ({ customFields, favicon, organizationName, url }) => `
     <meta httpEquiv="x-ua-compatible" content="ie=edge" />
     <meta property="og:type" content="website" />
     <meta name="author" content="${organizationName}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@questdb" />
     <meta name="generator" content="Docusaurus v<%= it.version %>" />
-    <link href="https://www.googletagmanager.com" rel="dns-prefetch" />
-    <link href="https://www.google-analytics.com" rel="dns-prefetch" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/img/icons/apple-180x180.png" sizes="180x180" />
@@ -30,9 +26,6 @@ module.exports = ({ customFields, favicon, organizationName, url }) => `
     <meta itemprop="description" content="${customFields.description}" />
     <meta itemprop="url" content="${url}" />
     <meta itemprop="logo" content="${url}${favicon}" />
-    <meta itemprop="sameAs" content="${customFields.twitterUrl}" />
-    <meta itemprop="sameAs" content="${customFields.linkedInUrl}" />
-    <meta itemprop="sameAs" content="${customFields.crunchbaseUrl}" />
     <meta itemprop="sameAs" content="${customFields.githubOrgUrl}" />
     <%~ it.preBodyTags %>
     <div id="__docusaurus">

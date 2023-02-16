@@ -10,21 +10,26 @@ const config = {
   baseUrl: "/",
   baseUrlIssueBanner: false,
   favicon: "/img/favicon.png",
-  organizationName: "QuestDB",
-  projectName: "questdb",
+  organizationName: "木易某某",
+  projectName: "木易跟打器",
   customFields: customFields,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
 
+  // i18n: {
+  //   defaultLocale: 'zh-CN',
+  //   locales: ['zh-CN'],
+  // },
+
   plugins: [
-    require.resolve("./plugins/fetch-latest-release/index"),
-    require.resolve("./plugins/fetch-repo/index"),
-    require.resolve("./plugins/remote-repo-example/index"),
-    require.resolve("./plugins/fetch-contributors-count/index"),
+    // require.resolve("./plugins/fetch-latest-release/index"),
+    // require.resolve("./plugins/fetch-repo/index"),
+    // require.resolve("./plugins/remote-repo-example/index"),
+    // require.resolve("./plugins/fetch-contributors-count/index"),
     require.resolve("./plugins/webpack-ts/index"),
-    require.resolve("./plugins/optimize/index"),
-    require.resolve("./plugins/manifest/index"),
-    require.resolve("./plugins/delay-code-block-appearance"),
+    // require.resolve("./plugins/optimize/index"),
+    // require.resolve("./plugins/manifest/index"),
+    // require.resolve("./plugins/delay-code-block-appearance"),
     // [
     //   "@docusaurus/plugin-pwa",
     //   {
@@ -85,21 +90,21 @@ const config = {
   ].filter(Boolean),
 
   themeConfig: {
-    posthog: {
-      apiKey: process.env.POSTHOG_API_KEY,
-    },
+    // posthog: {
+    //   apiKey: process.env.POSTHOG_API_KEY,
+    // },
     colorMode: {
       defaultMode: "dark",
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },
-    image: "/img/og.gif",
+    // image: "/img/og.gif",
     // gtag: {
     //   trackingID: "GTM-PVR7M2G",
     //   anonymizeIP: true,
     // },
     prism: {
-      defaultLanguage: "questdb-sql",
+      // defaultLanguage: "questdb-sql",
       additionalLanguages: [
         "rust",
         "csharp",
@@ -115,11 +120,11 @@ const config = {
       theme: require("./src/internals/prism-github"),
       darkTheme: require("./src/internals/prism-dracula"),
     },
-    algolia: {
-      appId: "QL9L2YL7AQ",
-      apiKey: "2f67aeacbe73ad08a49efb9214ea27f3",
-      indexName: "questdb",
-    },
+    // algolia: {
+    //   appId: "QL9L2YL7AQ",
+    //   apiKey: "2f67aeacbe73ad08a49efb9214ea27f3",
+    //   indexName: "questdb",
+    // },
     navbar: {
       title: "木易跟打器",
       logo: {
@@ -127,63 +132,32 @@ const config = {
         src: "/img/navbar/easy-typer.png",
       },
       items: [
-        // {
-        //   label: "Product",
-        //   position: "left",
-        //   href: "#",
-        //   items: [
-        //     {
-        //       label: "QuestDB Cloud",
-        //       to: "/cloud/",
-        //     },
-        //     {
-        //       label: "QuestDB Open Source",
-        //       to: "/get-questdb/",
-        //     },
-        //     {
-        //       label: "QuestDB Enterprise",
-        //       to: "/enterprise/",
-        //     },
-        //     {
-        //       label: "Use Cases",
-        //       to: "/use-cases/",
-        //     },
-        //     {
-        //       label: "Customers",
-        //       to: "/customers/",
-        //     },
-        //     {
-        //       label: "Roadmap",
-        //       href: `https://github.com/orgs/questdb/projects/1/views/5`,
-        //     },
-        //   ],
-        // },
-        // {
-        //   label: "使用文档",
-        //   position: "left",
-        //   href: "#",
-        //   items: [
-        //     // {
-        //     //   label: "博客",
-        //     //   to: "/blog/",
-        //     //   activeBaseRegex: "/blog/?$",
-        //     // },
-        //     {
-        //       label: "快速开始",
-        //       to: "/docs/",
-        //       activeBaseRegex: "/blog/tags/tutorial/?$",
-        //     },
-        //     {
-        //       label: "发布记录",
-        //       to: "/community/",
-        //     },
-        //   ],
-        // },
-        // {
-        //   label: "博客",
-        //   to: "/blog/",
-        //   position: "left",
-        // },
+        {
+          label: "使用文档",
+          position: "left",
+          href: "#",
+          items: [
+            // {
+            //   label: "博客",
+            //   to: "/blog/",
+            //   activeBaseRegex: "/blog/?$",
+            // },
+            {
+              label: "快速开始",
+              to: "/docs/",
+              // activeBaseRegex: "/docs/?$",
+            },
+            {
+              label: "发布记录",
+              to: "/docs/changelog",
+            },
+          ],
+        },
+        {
+          label: "博客",
+          to: "/blog/",
+          position: "left",
+        },
         {
           href: 'https://typer.owenyang.top',
           label: '跟打器',
@@ -219,7 +193,7 @@ const config = {
         //   items: [
         //     {
         //       label: "快速开始",
-        //       to: "/blog/tags/tutorial/",
+        //       to: "/docs",
         //     },
         //     {
         //       label: "博客",
@@ -237,6 +211,10 @@ const config = {
             {
               label: "虎码官网",
               to: "https://tiger-code.com",
+            },
+            {
+              label: "秃秃的小屋",
+              to: "https://tiger-code.com/guide/1+-+Archives/Input+Method/00+-+MOC/MOC+%E8%99%8E%E7%A0%81%E8%BE%93%E5%85%A5%E6%B3%95",
             },
           ],
         },

@@ -14,7 +14,7 @@ import { Section } from "../components/Section"
 
 import { logos } from "../assets/logos"
 import { CustomerLogo } from "src/assets/types"
-import ProductMetrics from "../components/ProductMetrics"
+// import ProductMetrics from "../components/ProductMetrics"
 
 import Logo468Capital from "../assets/img/pages/about-us/468capital.svg"
 import SeedcampLogo from "../assets/img/pages/about-us/seedcamp.svg"
@@ -251,9 +251,9 @@ const AboutUs = () => (
         open source timeseries database
       </Section.Title>
     </Section>
-    <Section>
+    {/* <Section>
       <ProductMetrics />
-    </Section>
+    </Section> */}
     <UsedBy />
     <Investors />
     <Team />

@@ -10,59 +10,59 @@ import { ThemeClassNames } from "@docusaurus/theme-common"
 
 import styles from "./styles.module.css"
 import { ListItem } from "./ListItem"
-import { Categories } from "./Categories"
-import type { Props as CategoriesProps } from "./Categories"
-import { Chips } from "./Chips"
-import type { Props as ChipProps } from "./Chips"
+// import { Categories } from "./Categories"
+// import type { Props as CategoriesProps } from "./Categories"
+// import { Chips } from "./Chips"
+// import type { Props as ChipProps } from "./Chips"
 import { ensureTrailingSlash } from "../../utils"
 
 export type FrontMatter = OriginalFrontMatter & { permalink?: string }
 
-const categories: CategoriesProps["categories"] = [
-  {
-    title: "Benchmarks",
-    description:
-      "Reproducible benchmarks of QuestDB and other databases using open source benchmarking frameworks",
-    url: "/blog/tags/benchmark/",
-  },
-  {
-    title: "Demos",
-    description:
-      "Demos involving QuestDB and other popular open source tools for a wide range of use cases",
-    url: "/blog/tags/demo/",
-  },
-  {
-    title: "Tutorials",
-    description:
-      "Step-by-step tutorials and guides for developers to build applications with QuestDB",
-    url: "/blog/tags/tutorial/",
-  },
-  {
-    title: "User Stories",
-    description:
-      "How QuestDB powers the core infrastructure of our users for time series data and real-time analytics",
-    url: "/customers/",
-  },
-]
+// const categories: CategoriesProps["categories"] = [
+//   {
+//     title: "Benchmarks",
+//     description:
+//       "Reproducible benchmarks of QuestDB and other databases using open source benchmarking frameworks",
+//     url: "/blog/tags/benchmark/",
+//   },
+//   {
+//     title: "Demos",
+//     description:
+//       "Demos involving QuestDB and other popular open source tools for a wide range of use cases",
+//     url: "/blog/tags/demo/",
+//   },
+//   {
+//     title: "Tutorials",
+//     description:
+//       "Step-by-step tutorials and guides for developers to build applications with QuestDB",
+//     url: "/blog/tags/tutorial/",
+//   },
+//   {
+//     title: "User Stories",
+//     description:
+//       "How QuestDB powers the core infrastructure of our users for time series data and real-time analytics",
+//     url: "/customers/",
+//   },
+// ]
 
-const prioritizedTags: ChipProps["items"] = [
-  "release",
-  "engineering",
-  "python",
-  "grafana",
-  "time-series",
-  "sql",
-  "kafka",
-  "prometheus",
-  "telegraf",
-  "company",
-  "community",
-  "newsletter",
-  "crypto",
-].map((tag) => ({
-  name: tag,
-  permalink: `/blog/tags/${tag.replace(/ /g, "-")}`,
-}))
+// const prioritizedTags: ChipProps["items"] = [
+//   "release",
+//   "engineering",
+//   "python",
+//   "grafana",
+//   "time-series",
+//   "sql",
+//   "kafka",
+//   "prometheus",
+//   "telegraf",
+//   "company",
+//   "community",
+//   "newsletter",
+//   "crypto",
+// ].map((tag) => ({
+//   name: tag,
+//   permalink: `/blog/tags/${tag.replace(/ /g, "-")}`,
+// }))
 
 function BlogListPage(props: Props): JSX.Element {
   const { metadata, items } = props
@@ -124,20 +124,6 @@ function BlogListPage(props: Props): JSX.Element {
             </BlogPostItem>
           </div>
         )}
-
-        <div className={styles.categories}>
-          <h2>Popular topics</h2>
-          {/* BlogListPage component is used for `blog/` and also for `blog/tags/*`.
-            When rendered for `blog/tags/*, then `metadata` includes tag, instead of blog data */}
-          <Categories
-            activeCategory={((metadata as unknown) as Tag).permalink}
-            categories={categories}
-          />
-          <Chips
-            activeChip={((metadata as unknown) as Tag).permalink}
-            items={prioritizedTags}
-          />
-        </div>
 
         {isTagsPage ? (
           <h1 className={styles.tagsTitle}>

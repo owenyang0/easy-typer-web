@@ -2,5 +2,5 @@ User-agent: *
 
 Allow: /sitemap.xml
 Disallow: /__unused/
-Sitemap: https://questdb.io/sitemap.xml
-Host: https://questdb.io
+Sitemap: https://typer.owenyang.top/sitemap.xml
+Host: https://typer.owenyang.top

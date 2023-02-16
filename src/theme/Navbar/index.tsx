@@ -5,7 +5,7 @@ import React, { ComponentProps, useCallback, useState, useEffect } from "react"
 import Toggle from "@theme/Toggle"
 
 import Button from "@theme/Button"
-import SearchBar from "@theme/SearchBar"
+// import SearchBar from "@theme/SearchBar"
 import useLockBodyScroll from "@theme/hooks/useLockBodyScroll"
 import useWindowSize, { windowSizes } from "@theme/hooks/useWindowSize"
 
@@ -61,7 +61,7 @@ function Navbar(): JSX.Element {
     },
   } = useDocusaurusContext()
   const [sidebarShown, setSidebarShown] = useState(false)
-  const [isSearchBarExpanded, setIsSearchBarExpanded] = useState(false)
+  // const [isSearchBarExpanded, setIsSearchBarExpanded] = useState(false)
 
   useLockBodyScroll(sidebarShown)
 
@@ -110,12 +110,12 @@ function Navbar(): JSX.Element {
               onChange={colorModeToggle.toggle}
             />
           )}
-          <div className={styles.searchBar}>
+          {/* <div className={styles.searchBar}>
             <SearchBar
               handleSearchBarToggle={setIsSearchBarExpanded}
               isSearchBarExpanded={isSearchBarExpanded}
             />
-          </div>
+          </div> */}
           <Button
             className={clsx(styles.ctaButton, styles.getQuestdb)}
             uppercase={false}
