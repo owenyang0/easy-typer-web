@@ -86,11 +86,11 @@ html[data-theme='light'] .root tbody tr:nth-child(2n+1) {
 }
 
 .iconCheck {
-  background-image: url("/img/pages/cloud/tick-white.svg?inline");
+  background-image: url("/pimgs/pages/cloud/tick-white.svg?inline");
 }
 
 .iconClose {
-  background-image: url("/img/pages/cloud/close.svg?inline");
+  background-image: url("/pimgs/pages/cloud/close.svg?inline");
 }
 
 .link {

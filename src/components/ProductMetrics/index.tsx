@@ -4,10 +4,10 @@ import { usePluginData } from "@docusaurus/useGlobalData"
 import style from "./styles.module.css"
 import SvgImage from "../SvgImage"
 
-import GithubLogo from "../../assets/img/github.svg"
-import SlackLogo from "../../assets/img/slack.svg"
-import DatabaseLogo from "../../assets/img/database.svg"
-import QuestDBLogo from "../../assets/img/questdb.svg"
+import GithubLogo from "../../assets/pimgs/github.svg"
+import SlackLogo from "../../assets/pimgs/slack.svg"
+import DatabaseLogo from "../../assets/pimgs/database.svg"
+import QuestDBLogo from "../../assets/pimgs/questdb.svg"
 
 type Repository = {
   repo: {

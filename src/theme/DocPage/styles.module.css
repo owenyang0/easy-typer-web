@@ -68,7 +68,7 @@ html[data-theme='light'] .doc {
 
   .doc__expand:before {
     content: "";
-    background-image: url("/img/icons/arrow.svg");
+    background-image: url("/pimgs/icons/arrow.svg");
     width: 20px;
     height: 20px;
   }

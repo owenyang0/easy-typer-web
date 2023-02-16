@@ -7,9 +7,9 @@ const config = {
   title: '木易跟打器',
   tagline: '易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器',
   url: `https://${consts.domain}`,
-  baseUrl: "/",
+  baseUrl: "/portal/",
   baseUrlIssueBanner: false,
-  favicon: "/img/favicon.png",
+  favicon: "/pimgs/favicon.png",
   organizationName: "木易某某",
   projectName: "木易跟打器",
   customFields: customFields,
@@ -98,7 +98,7 @@ const config = {
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },
-    // image: "/img/og.gif",
+    // image: "/pimgs/og.gif",
     // gtag: {
     //   trackingID: "GTM-PVR7M2G",
     //   anonymizeIP: true,
@@ -129,7 +129,7 @@ const config = {
       title: "木易跟打器",
       logo: {
         alt: "木易跟打器",
-        src: "/img/navbar/easy-typer.png",
+        src: "/pimgs/navbar/easy-typer.png",
       },
       items: [
         {
@@ -144,7 +144,7 @@ const config = {
             // },
             {
               label: "快速开始",
-              to: "/docs/",
+              to: "/docs/intro",
               // activeBaseRegex: "/docs/?$",
             },
             {

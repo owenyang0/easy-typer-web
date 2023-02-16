@@ -13,7 +13,7 @@ export const GetQuestdbHelp = ({ assets, release }: Props) => (
       alt="SQL statement in a code editor with an artistic view of the query result shown as a chart and a table"
       className={styles.illustration}
       height={468}
-      src="/img/pages/getQuestdb/query.svg"
+      src="/pimgs/pages/getQuestdb/query.svg"
       width={500}
     />
 

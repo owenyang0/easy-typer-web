@@ -9,7 +9,7 @@ description:
 keywords:
   - concept1
   - concept2
-image: /img/blog/path/file.png
+image: /pimgs/blog/path/file.png
 tags: [tutorial, tag1, tag2]
 slug: seo-friendly-url
 ---
@@ -25,7 +25,7 @@ import Banner from "@theme/Banner"
 <Banner
   alt="Title of the banner image"
   height={467}
-  src="/img/blog/path/file.png"
+  src="/pimgs/blog/path/file.png"
   width={650}
 ></Banner>
 

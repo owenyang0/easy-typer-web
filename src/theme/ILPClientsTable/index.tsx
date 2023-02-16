@@ -14,41 +14,41 @@ type Client = {
 const clients: Client[] = [
   {
     label: "Python",
-    logoSrc: "/img/logos/python.svg",
+    logoSrc: "/pimgs/logos/python.svg",
     docsUrl: "https://py-questdb-client.readthedocs.io/en/latest/",
     sourceUrl: "https://github.com/questdb/py-questdb-client",
   },
   {
     label: "NodeJS",
-    logoSrc: "/img/logos/nodejs-light.svg",
-    lightThemeLogoSrc: "/img/logos/nodejs-dark.svg",
+    logoSrc: "/pimgs/logos/nodejs-light.svg",
+    lightThemeLogoSrc: "/pimgs/logos/nodejs-dark.svg",
     docsUrl: "https://questdb.github.io/nodejs-questdb-client",
     sourceUrl: "https://github.com/questdb/nodejs-questdb-client",
   },
   {
     label: ".NET",
-    logoSrc: "/img/logos/dotnet.svg",
+    logoSrc: "/pimgs/logos/dotnet.svg",
     sourceUrl: "https://github.com/questdb/net-questdb-client",
   },
   {
     label: "Java",
     docsUrl: "/docs/reference/clients/java_ilp/",
-    logoSrc: "/img/logos/java.svg",
+    logoSrc: "/pimgs/logos/java.svg",
   },
   {
     label: "C and C++",
-    logoSrc: "/img/logos/cplusplus.svg",
+    logoSrc: "/pimgs/logos/cplusplus.svg",
     sourceUrl: "https://github.com/questdb/c-questdb-client",
   },
   {
     label: "Golang",
-    logoSrc: "/img/logos/go.svg",
+    logoSrc: "/pimgs/logos/go.svg",
     docsUrl: "https://pkg.go.dev/github.com/questdb/go-questdb-client",
     sourceUrl: "https://github.com/questdb/go-questdb-client",
   },
   {
     label: "Rust",
-    logoSrc: "/img/logos/rust.svg",
+    logoSrc: "/pimgs/logos/rust.svg",
     docsUrl: "https://docs.rs/crate/questdb-rs/latest",
     sourceUrl: "https://github.com/questdb/c-questdb-client",
   },
@@ -91,7 +91,7 @@ export const ILPClientsTable = () => {
                   <img
                     alt="Documentation icon"
                     height={22}
-                    src="/img/icons/open-book.svg"
+                    src="/pimgs/icons/open-book.svg"
                     style={{ filter: "invert(1)" }}
                     title="Documentation"
                     width={22}
@@ -108,7 +108,7 @@ export const ILPClientsTable = () => {
                   <img
                     alt="Github icon"
                     height={22}
-                    src="/img/github.svg"
+                    src="/pimgs/github.svg"
                     title="Source"
                     width={22}
                   />

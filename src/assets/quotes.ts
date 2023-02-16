@@ -20,7 +20,7 @@ const quotes: Quote[] = [
     website: "https://www.airbus.com/",
     logo: {
       alt: "Airbus logo",
-      src: "/img/pages/customers/cards/airbus.svg",
+      src: "/pimgs/pages/customers/cards/airbus.svg",
       height: 44,
       width: 110,
     },
@@ -34,7 +34,7 @@ const quotes: Quote[] = [
     website: "https://www.yahoo.com/",
     logo: {
       alt: "Yahoo logo",
-      src: "/img/pages/customers/cards/yahoo.svg",
+      src: "/pimgs/pages/customers/cards/yahoo.svg",
       height: 56,
       width: 140,
     },
@@ -48,7 +48,7 @@ const quotes: Quote[] = [
     website: "https://www.keplercheuvreux.com/en/",
     logo: {
       alt: "Kepler logo",
-      src: "/img/pages/customers/cards/kepler.svg",
+      src: "/pimgs/pages/customers/cards/kepler.svg",
       height: 56,
       width: 140,
     },
@@ -119,7 +119,7 @@ const quotes: Quote[] = [
     website: "https://www.tqsintegration.com",
     logo: {
       alt: "TQS Integration logo",
-      src: "/img/pages/customers/cards/tqs-integration.svg",
+      src: "/pimgs/pages/customers/cards/tqs-integration.svg",
       height: 56,
       width: 140,
     },
@@ -133,7 +133,7 @@ const quotes: Quote[] = [
     website: "https://www.samtec.com/",
     logo: {
       alt: "Samtec logo",
-      src: "/img/pages/customers/cards/samtec.svg",
+      src: "/pimgs/pages/customers/cards/samtec.svg",
       height: 56,
       width: 140,
     },
@@ -147,7 +147,7 @@ const quotes: Quote[] = [
     website: "https://toggle.ai/",
     logo: {
       alt: "Toggle logo",
-      src: "/img/pages/customers/cards/toggle.svg",
+      src: "/pimgs/pages/customers/cards/toggle.svg",
       height: 56,
       width: 140,
     },

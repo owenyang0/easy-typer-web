@@ -32,7 +32,7 @@ export const ListItem = ({ forcedTag, content, belowFold }: Props) => {
   const postUrl = isExternal
     ? frontMatter.permalink
     : ensureTrailingSlash(content.metadata.permalink)
-  const imageUrl = content.frontMatter.image ?? "/img/tutorial/placeholder.png"
+  const imageUrl = content.frontMatter.image ?? "/pimgs/tutorial/placeholder.png"
   const author =
     typeof content.frontMatter.author_url !== "undefined" ? (
       <a href={content.frontMatter.author_url}>{content.frontMatter.author}</a>

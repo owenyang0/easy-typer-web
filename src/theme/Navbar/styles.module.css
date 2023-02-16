@@ -51,7 +51,7 @@
 :global(.navbar__items--right .navbar__item.header-github-link) {
   display: flex;
   align-items: center;
-  background: url("/img/navbar/github.svg") 0 center / 20px 20px no-repeat;
+  background: url("/pimgs/navbar/github.svg") 0 center / 20px 20px no-repeat;
   padding: 0.2rem 0 0.2rem 1.8rem;
   font-size: 15px;
 
@@ -66,7 +66,7 @@
 }
 
 :global(html[data-theme="light"] .navbar__item.header-github-link ) {
-  background: url("/img/github.svg") 0 center / 20px 20px no-repeat;
+  background: url("/pimgs/github.svg") 0 center / 20px 20px no-repeat;
 }
 
 /* hide unneeded search bar elements. we only need an icon. */

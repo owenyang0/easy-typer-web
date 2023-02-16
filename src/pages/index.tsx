@@ -98,7 +98,7 @@ import LiveDemo from "../modules/index-live-demo"
 //         alt="Artistic view of QuestDB's Web Console split in 3 components: the navigation tree, the SQL code editor and data displayed as a chart"
 //         width={600}
 //         height={467}
-//         src="/img/pages/index/console.svg"
+//         src="/pimgs/pages/index/console.svg"
 //       />
 //     </Section>
 //   </Section>

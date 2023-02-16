@@ -33,7 +33,7 @@
 /*.*.css
   Cache-Control: public, max-age=31536000
 
-/img/*
+/pimgs/*
   Cache-Control: public, max-age=172800
 
 /manifest.webmanifest

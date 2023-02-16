@@ -48,7 +48,7 @@ const Footer = () => {
         <img
           alt="易跟打 logo"
           className={styles.logo}
-          src="/img/footer/easy-typer.png"
+          src="/pimgs/footer/easy-typer.png"
           title="易跟打 - 一款支持macOS、Web使用的跨平台打字练习程序"
           width={50}
           height={50}
@@ -64,7 +64,7 @@ const Footer = () => {
               <img
                 alt="GitHub logo"
                 height={22}
-                src="/img/github.svg"
+                src="/pimgs/github.svg"
                 title="GitHub"
                 width={22}
               />

@@ -45,7 +45,7 @@ export const Screenshot = ({
   className,
   style,
 }: Props) => {
-  const headerButtonsImgPath = useBaseUrl("/img/pages/index/window-header.svg")
+  const headerButtonsImgPath = useBaseUrl("/pimgs/pages/index/window-header.svg")
   const { isDarkTheme } = useThemeContext()
 
   return (

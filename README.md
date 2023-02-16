@@ -116,7 +116,7 @@ for you.
 We use [Husky](https://github.com/typicode/husky) to automatically deploy git
 hooks.
 
-On every `git commit` we check that images added to `static/img/*` do not exceed
+On every `git commit` we check that images added to `static/pimgs/*` do not exceed
 10MB.
 
 ## Legal Notice

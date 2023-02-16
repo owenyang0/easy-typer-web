@@ -72,7 +72,7 @@
   --ifm-hr-border-color: var(--palette-white-20);
   --ifm-link-color: var(--palette-turquoise);
   --ifm-list-paragraph-margin: 0.5rem;
-  --ifm-menu-link-sublist-icon: url("/img/infima/arrow.svg");
+  --ifm-menu-link-sublist-icon: url("/pimgs/infima/arrow.svg");
   --ifm-navbar-background-color: var(--palette-charade);
   --ifm-navbar-height: 80px;
   --ifm-navbar-item-padding-horizontal: 20px;
@@ -139,7 +139,7 @@
 html[data-theme="dark"] {
   --ifm-background-color: var(--palette-charade);
   --ifm-color-emphasis-300: var(--palette-pale-blue);
-  --ifm-menu-link-sublist-icon: url("/img/infima/arrow.svg");
+  --ifm-menu-link-sublist-icon: url("/pimgs/infima/arrow.svg");
 }
 
 html[data-theme="light"] {

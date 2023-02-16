@@ -1,6 +1,6 @@
 ---
 title: 介绍
-slug: /
+slug: /intro
 description:
   易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器
 ---

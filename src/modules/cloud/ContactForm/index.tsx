@@ -8,7 +8,7 @@ import style from "./styles.module.css"
 import clsx from "clsx"
 import type { PricingPlan } from "../../pricing/plan"
 import Link from "@docusaurus/Link"
-import CameraIcon from "../../../assets/img/camera.svg"
+import CameraIcon from "../../../assets/pimgs/camera.svg"
 import SvgImage from "../../../components/SvgImage"
 
 type Props = {

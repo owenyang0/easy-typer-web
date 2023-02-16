@@ -26,7 +26,7 @@
   width: 19px;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url("/img/pages/pricing/star.svg?inline");
+  background-image: url("/pimgs/pages/pricing/star.svg?inline");
 }
 
 html[data-theme='light'] .star {
