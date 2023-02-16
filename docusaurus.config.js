@@ -184,7 +184,7 @@ const config = {
           items: [
             {
               label: "跟打器",
-              to: "https://typer.owenyang.top",
+              href: "https://typer.owenyang.top",
             },
           ],
         },
@@ -210,11 +210,11 @@ const config = {
             // },
             {
               label: "虎码官网",
-              to: "https://tiger-code.com",
+              href: "https://tiger-code.com",
             },
             {
               label: "秃秃的小屋",
-              to: "https://tiger-code.com/guide/1+-+Archives/Input+Method/00+-+MOC/MOC+%E8%99%8E%E7%A0%81%E8%BE%93%E5%85%A5%E6%B3%95",
+              href: "https://tiger-code.com/guide/1+-+Archives/Input+Method/00+-+MOC/MOC+%E8%99%8E%E7%A0%81%E8%BE%93%E5%85%A5%E6%B3%95",
             },
           ],
         },

@@ -22,12 +22,7 @@ export const OtherUseCases = () => (
           </>
         }
       >
-        <Button
-          to="/"
-          variant="tertiary"
-          size="xsmall"
-          uppercase={false}
-        >
+        <Button to="/" variant="tertiary" size="xsmall" uppercase={false}>
           More Info
         </Button>
       </UseCase>
@@ -50,12 +45,7 @@ export const OtherUseCases = () => (
         >
           Live Demo
         </Button>
-        <Button
-          to="/"
-          variant="tertiary"
-          size="xsmall"
-          uppercase={false}
-        >
+        <Button to="/" variant="tertiary" size="xsmall" uppercase={false}>
           Download
         </Button>
       </UseCase>

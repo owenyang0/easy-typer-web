@@ -5,8 +5,6 @@ import type { Props } from "@theme/BlogPostPage"
 import BlogPostPaginator from "@theme/BlogPostPaginator"
 import BlogSidebar from "@theme/BlogSidebar"
 import Layout from "@theme/Layout"
-import { Section } from "../../components/Section"
-import { ActionFooter } from "../../components/ActionFooter"
 import { ensureTrailingSlash } from "../../utils"
 
 function BlogPostPage(props: Props): JSX.Element {
@@ -64,10 +62,6 @@ function BlogPostPage(props: Props): JSX.Element {
           </aside>
         </div>
       </div>
-
-      <Section>
-        <ActionFooter />
-      </Section>
     </Layout>
   )
 }
