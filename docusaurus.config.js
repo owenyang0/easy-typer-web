@@ -13,7 +13,7 @@ const config = {
   organizationName: "木易某某",
   projectName: "木易跟打器",
   customFields: customFields,
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "throw",
 
   // i18n: {
@@ -159,7 +159,7 @@ const config = {
           position: "left",
         },
         {
-          href: 'https://typer.owenyang.top',
+          href: '/dojo',
           label: '跟打器',
           position: "left",
         },

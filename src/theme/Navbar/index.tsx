@@ -92,7 +92,7 @@ function Navbar(): JSX.Element {
     >
       <div className={clsx("navbar__inner", styles.inner)}>
         <div className="navbar__items">
-          <a className={clsx("navbar__brand", styles.brand)} href="/">
+          <a className={clsx("navbar__brand", styles.brand)} href="/portal">
             木易跟打器
           </a>
           {leftItems.map((item, i) => (
@@ -121,7 +121,7 @@ function Navbar(): JSX.Element {
             uppercase={false}
             size="xsmall"
             variant="secondary"
-            to="/docs/guides/download/"
+            to="/portal/docs/guides/download/"
           >
             下载macOS版
           </Button>
