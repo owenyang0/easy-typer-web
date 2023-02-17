@@ -18,8 +18,9 @@ export const Header = () => {
 
         <div className={styles.getStartedButtons}>
           <Link
-            to="https://typer.owenyang.top"
+            to="https://typer.owenyang.top/dojo"
             className={styles.joinPublicPreviewLink}
+            target="_self"
           >
             <Button newTab uppercase={false}>
               开始Web跟打练习

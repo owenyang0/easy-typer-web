@@ -159,9 +159,11 @@ const config = {
           position: "left",
         },
         {
-          href: '/dojo',
+          to: 'pathname:///dojo',
           label: '跟打器',
           position: "left",
+          autoAddBaseUrl: false,
+          target: '_self',
         },
         {
           label: "点个赞",
@@ -183,8 +185,9 @@ const config = {
           title: "产品",
           items: [
             {
-              label: "跟打器",
-              href: "https://typer.owenyang.top",
+              to: '/dojo',
+              label: '跟打器',
+              target: '_self',
             },
           ],
         },

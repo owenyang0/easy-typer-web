@@ -20,6 +20,15 @@ module.exports = ({ customFields, favicon, organizationName, url }) => `
     <% it.stylesheets.forEach((stylesheet) => { %>
       <link rel="stylesheet" type="text/css" href="<%= it.baseUrl %><%= stylesheet %>" />
     <% }); %>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?1059d316d5f6d915425c909347d1b752";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
   </head>
   <body <%~ it.bodyAttributes %> itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="${customFields.oneLiner}" />
