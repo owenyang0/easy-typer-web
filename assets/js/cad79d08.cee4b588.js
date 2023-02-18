@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkeasy_typer_web=self.webpackChunkeasy_typer_web||[]).push([[723],{148:function(e){e.exports=JSON.parse('{"allTagsPath":"/portal/blog/tags","slug":"\u6728\u6613\u8ddf\u6253\u5668","name":"\u6728\u6613\u8ddf\u6253\u5668","count":2,"permalink":"/portal/blog/tags/\u6728\u6613\u8ddf\u6253\u5668"}')}}]);

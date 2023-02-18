@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>木易跟打器 Blog</title>
+        <link>https://typer.owenyang.top/blog</link>
+        <description>木易跟打器 Blog</description>
+        <lastBuildDate>Thu, 16 Feb 2023 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <copyright>Copyright © 2023 木易某某</copyright>
+        <item>
+            <title><![CDATA[木易跟打器[2]-打字练习mac客户端与网页版[草稿]]]></title>
+            <link>https://typer.owenyang.top/portal/blog/easy-typer-macos-vs-web-app</link>
+            <guid>easy-typer-macos-vs-web-app</guid>
+            <pubDate>Thu, 16 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器]]></description>
+        </item>
+        <item>
+            <title><![CDATA[木易跟打器[1]-macOS上可直接载文的跟打器[草稿]]]></title>
+            <link>https://typer.owenyang.top/portal/blog/easy-typer-working-in-macos-platform</link>
+            <guid>easy-typer-working-in-macos-platform</guid>
+            <pubDate>Wed, 15 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器]]></description>
+        </item>
+    </channel>
+</rss>

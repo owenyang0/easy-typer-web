@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://typer.owenyang.top/blog</id>
+    <title>木易跟打器 Blog</title>
+    <updated>2023-02-16T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://typer.owenyang.top/blog"/>
+    <subtitle>木易跟打器 Blog</subtitle>
+    <icon>https://typer.owenyang.top/pimgs/favicon.png</icon>
+    <rights>Copyright © 2023 木易某某</rights>
+    <entry>
+        <title type="html"><![CDATA[木易跟打器[2]-打字练习mac客户端与网页版[草稿]]]></title>
+        <id>easy-typer-macos-vs-web-app</id>
+        <link href="https://typer.owenyang.top/portal/blog/easy-typer-macos-vs-web-app"/>
+        <updated>2023-02-16T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[木易跟打器[1]-macOS上可直接载文的跟打器[草稿]]]></title>
+        <id>easy-typer-working-in-macos-platform</id>
+        <link href="https://typer.owenyang.top/portal/blog/easy-typer-working-in-macos-platform"/>
+        <updated>2023-02-15T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器]]></summary>
+    </entry>
+</feed>

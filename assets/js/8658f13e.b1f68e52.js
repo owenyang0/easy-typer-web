@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkeasy_typer_web=self.webpackChunkeasy_typer_web||[]).push([[511],{1099:function(e){e.exports=JSON.parse('{"allTagsPath":"/portal/blog/tags","slug":"qq\u8ddf\u6253\u5668","name":"qq\u8ddf\u6253\u5668","count":2,"permalink":"/portal/blog/tags/qq\u8ddf\u6253\u5668"}')}}]);
