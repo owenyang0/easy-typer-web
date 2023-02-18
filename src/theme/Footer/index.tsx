@@ -89,7 +89,9 @@ const Footer = () => {
                 <ul className={styles.items}>
                   {linkItem.items.map((item) => (
                     <li className={styles.item} key={item.href ?? item.to}>
-                      <Link className={styles.link} {...item}>{item.label}</Link>
+                      <Link className={styles.link} {...item}>
+                        {item.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
