@@ -8,10 +8,11 @@ const useCases = [
     uses: [
       "Web 在线跟打练习",
       "macOS 平台上直接载文",
-      "基于PWA的免安装 Web App",
+      "基于PWA的渐进式免安装 Web App",
+      "Android/iOS 上的微App",
     ],
     cta: {
-      label: "了解更多",
+      label: "马上体验",
       url: "https://typer.owenyang.top",
     },
   },

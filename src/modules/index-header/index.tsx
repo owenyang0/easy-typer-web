@@ -2,7 +2,7 @@ import React from "react"
 import Button from "@theme/Button"
 import { Section } from "../../components/Section"
 import styles from "./styles.module.css"
-import Link from "@docusaurus/Link"
+// import Link from "@docusaurus/Link"
 
 export const Header = () => {
   return (
@@ -17,15 +17,11 @@ export const Header = () => {
         </Section.Subtitle>
 
         <div className={styles.getStartedButtons}>
-          <Link
-            to="https://typer.owenyang.top/dojo"
-            className={styles.joinPublicPreviewLink}
-            target="_self"
-          >
+          <a href="/" className={styles.joinPublicPreviewLink} target="_self">
             <Button newTab uppercase={false}>
               开始Web跟打练习
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </Section>

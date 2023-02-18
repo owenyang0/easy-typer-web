@@ -166,7 +166,7 @@ function Navbar(): JSX.Element {
             href="/"
             onClick={hideSidebar}
           >
-            QuestDB
+            木易跟打器
           </a>
 
           {!colorModeToggle.disabled && (

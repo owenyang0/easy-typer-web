@@ -159,7 +159,7 @@ const config = {
           position: "left",
         },
         {
-          to: 'pathname:///dojo',
+          to: 'pathname:///',
           label: '跟打器',
           position: "left",
           autoAddBaseUrl: false,
@@ -185,9 +185,10 @@ const config = {
           title: "产品",
           items: [
             {
-              to: '/dojo',
+              to: '/',
               label: '跟打器',
               target: '_self',
+              autoAddBaseUrl: false,
             },
           ],
         },

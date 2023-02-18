@@ -1,4 +1,4 @@
-import useBaseUrl from "@docusaurus/useBaseUrl"
+// import useBaseUrl from "@docusaurus/useBaseUrl"
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext"
 import Button from "@theme/Button"
 import clsx from "clsx"
@@ -6,33 +6,34 @@ import React from "react"
 // import Subscribe from "../../components/Subscribe"
 import customFields from "../../config/customFields"
 import styles from "./styles.module.css"
+import Link from "@docusaurus/Link"
 
-type Props = {
-  href?: string
-  label: string
-  to?: string
-}
+// type Props = {
+//   href?: string
+//   label: string
+//   to?: string
+// }
 
-const Link = ({ to, href, label, ...props }: Props) => {
-  const linkHref = useBaseUrl(href ?? "", { forcePrependBaseUrl: undefined })
-  const linkTo = useBaseUrl(to ?? "")
+// const Link = ({ to, href, label, ...props }: Props) => {
+//   const linkHref = useBaseUrl(href ?? "", { forcePrependBaseUrl: undefined })
+//   const linkTo = useBaseUrl(to ?? "")
 
-  return (
-    <a
-      className={styles.link}
-      {...(href != null
-        ? {
-            href: linkHref,
-            rel: "noopener noreferrer",
-            target: "_blank",
-          }
-        : { href: linkTo })}
-      {...props}
-    >
-      {label}
-    </a>
-  )
-}
+//   return (
+//     <a
+//       className={styles.link}
+//       {...(href != null
+//         ? {
+//             href: linkHref,
+//             rel: "noopener noreferrer",
+//             target: "_blank",
+//           }
+//         : { href: linkTo })}
+//       {...props}
+//     >
+//       {label}
+//     </a>
+//   )
+// }
 
 const Footer = () => {
   const { siteConfig } = useDocusaurusContext()
@@ -88,7 +89,7 @@ const Footer = () => {
                 <ul className={styles.items}>
                   {linkItem.items.map((item) => (
                     <li className={styles.item} key={item.href ?? item.to}>
-                      <Link {...item} />
+                      <Link className={styles.link} {...item}>{item.label}</Link>
                     </li>
                   ))}
                 </ul>
