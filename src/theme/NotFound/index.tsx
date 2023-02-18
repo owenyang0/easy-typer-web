@@ -22,7 +22,12 @@ const NotFound = ({ location }) => {
           <Section.Subtitle>或查看其他内容</Section.Subtitle>
           <ul className={styles.otherContentLinks}>
             {[
-              { to: "/", label: "开始打字练习", autoAddBaseUrl: false },
+              {
+                to: "pathname:///",
+                label: "开始打字练习",
+                autoAddBaseUrl: false,
+                target: "_self",
+              },
               { to: "/blog/", label: "阅读博客", autoAddBaseUrl: true },
               { to: "/docs/", label: "阅读文档", autoAddBaseUrl: true },
             ].map(({ to, label, autoAddBaseUrl }) => (

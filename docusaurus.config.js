@@ -185,7 +185,7 @@ const config = {
           title: "产品",
           items: [
             {
-              to: '/',
+              to: 'pathname:///',
               label: '跟打器',
               target: '_self',
               autoAddBaseUrl: false,
