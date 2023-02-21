@@ -18,7 +18,7 @@
   /* padding-top: 32px; */
   /* border-radius: 6px; */
   /* width: 90%; */
-  max-width: 700px;
+  max-width: 800px;
   /* height: 315px; */
 }
 
@@ -35,9 +35,6 @@
 .code > :global([data-typeit-id]) {
   display: inline-block;
   height: 100%;
-}
-
-.code .prism-code {
 }
 
 .code pre {
