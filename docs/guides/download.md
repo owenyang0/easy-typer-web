@@ -6,7 +6,7 @@ description:
 木易跟打器可从在**网页练习**或下载**macOS客户端**使用，两者的差异只在于是否能直接载文的区别。
 
 ## 一、网页练习
-木易跟打器 - 发文 [https://typer.owenyang.top/kata](https://typer.owenyang.top/kata)
+木易跟打器 - 跟打 [https://typer.owenyang.top](https://typer.owenyang.top)
 
 ## 二、客户端下载
 **【官网下载】** [木易跟打器0.3.0] - [木易跟打器-0.3.0-mac.zip](http://s.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8-0.3.0-mac.zip)
