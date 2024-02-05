@@ -223,12 +223,12 @@ const config = {
           ],
         },
         {
-          title: "社交",
+          title: "关于",
           items: [
-            // {
-            //   label: "Twitter",
-            //   href: customFields.twitterUrl,
-            // },
+            {
+              label: "木易某某",
+              href: 'https://owenyang.top/about',
+            },
             {
               label: "GitHub",
               href: customFields.githubUrl,

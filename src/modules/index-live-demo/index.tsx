@@ -50,10 +50,10 @@ const LiveDemo = () => {
             controls
             loop
             poster="/img/ui@2x.png"
-            src="https://static.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4"
+            src="https://s.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4"
           >
             抱歉，您的浏览器不支持内嵌视频，不过不用担心，你可以
-            <a href="https://static.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4">
+            <a href="https://s.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4">
               下载
             </a>
             并用你喜欢的播放器观看！
