@@ -49,7 +49,7 @@ const Footer = () => {
         <img
           alt="易跟打 logo"
           className={styles.logo}
-          src="/pimgs/footer/easy-typer.png"
+          src="https://static.owenyang.top/typers/typer-logo-square.png"
           title="易跟打 - 一款支持macOS、Web使用的跨平台打字练习程序"
           width={50}
           height={50}
