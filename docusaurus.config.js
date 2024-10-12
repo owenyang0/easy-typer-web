@@ -9,7 +9,7 @@ const config = {
   url: `https://${consts.domain}`,
   baseUrl: "/portal/",
   baseUrlIssueBanner: false,
-  favicon: "/pimgs/favicon.png",
+  favicon: "/favicon.ico",
   organizationName: "木易某某",
   projectName: "木易跟打器",
   customFields: customFields,
