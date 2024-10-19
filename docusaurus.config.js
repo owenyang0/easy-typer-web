@@ -154,8 +154,8 @@ const config = {
           ],
         },
         {
-          label: "博客",
-          to: "/blog/",
+          label: "木易博客",
+          href: "https://blog.owenyang.top",
           position: "left",
         },
         {
@@ -228,6 +228,10 @@ const config = {
             {
               label: "木易某某",
               href: 'https://owenyang.top/about',
+            },
+            {
+              label: "木易博客",
+              href: "https://blog.owenyang.top",
             },
             {
               label: "GitHub",
