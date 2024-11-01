@@ -7,8 +7,7 @@ const config = {
   title: '木易跟打器',
   tagline: '易跟打是一款支持macOS、Web使用的跨平台打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器',
   url: `https://${consts.domain}`,
-  // baseUrl: "/portal/",
-  baseUrl: "/",
+  baseUrl: "/portal/",
   baseUrlIssueBanner: false,
   favicon: "/favicon.ico",
   organizationName: "木易某某",
@@ -23,41 +22,7 @@ const config = {
   // },
 
   plugins: [
-    // require.resolve("./plugins/fetch-latest-release/index"),
-    // require.resolve("./plugins/fetch-repo/index"),
-    // require.resolve("./plugins/remote-repo-example/index"),
-    // require.resolve("./plugins/fetch-contributors-count/index"),
     require.resolve("./plugins/webpack-ts/index"),
-    // require.resolve("./plugins/optimize/index"),
-    // require.resolve("./plugins/manifest/index"),
-    // require.resolve("./plugins/delay-code-block-appearance"),
-    // [
-    //   "@docusaurus/plugin-pwa",
-    //   {
-    //     pwaHead: [
-    //       {
-    //         tagName: "link",
-    //         rel: "manifest",
-    //         href: "/manifest.webmanifest",
-    //       },
-    //       {
-    //         tagName: "meta",
-    //         name: "theme-color",
-    //         content: "#21222c",
-    //       },
-    //       {
-    //         tagName: "meta",
-    //         name: "apple-mobile-web-app-capable",
-    //         content: "yes",
-    //       },
-    //       {
-    //         tagName: "meta",
-    //         name: "apple-mobile-web-app-status-bar-style",
-    //         content: "#21222c",
-    //       },
-    //     ],
-    //   },
-    // ],
     [
       require.resolve("./plugins/blog"),
       {
@@ -155,7 +120,7 @@ const config = {
           ],
         },
         {
-          label: "木易博客",
+          label: "木易的技术博客",
           href: "https://blog.owenyang.top",
           position: "left",
         },
@@ -187,9 +152,13 @@ const config = {
           items: [
             {
               to: 'pathname:///',
-              label: '跟打器',
+              label: '🎉 木易跟打器',
               target: '_self',
               autoAddBaseUrl: false,
+            },
+            {
+              label: '🍺 《易·阅读》',
+              href: "https://yuedu.owenyang.top",
             },
           ],
         },
@@ -209,10 +178,6 @@ const config = {
         {
           title: "友链",
           items: [
-            // {
-            //   label: "关于作者",
-            //   to: "/about-us/",
-            // },
             {
               label: "虎码官网",
               href: "https://tiger-code.com",
@@ -227,11 +192,11 @@ const config = {
           title: "关于",
           items: [
             {
-              label: "木易某某",
+              label: "💫 关于木易某某",
               href: 'https://owenyang.top/about',
             },
             {
-              label: "木易博客",
+              label: "🎗 木易技术博客",
               href: "https://blog.owenyang.top",
             },
             {
@@ -249,10 +214,6 @@ const config = {
             // {
             //   label: "YouTube",
             //   to: customFields.videosUrl,
-            // },
-            // {
-            //   label: "Reddit",
-            //   href: customFields.redditUrl,
             // },
           ],
         },

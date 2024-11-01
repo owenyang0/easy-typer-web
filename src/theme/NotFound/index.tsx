@@ -28,8 +28,8 @@ const NotFound = ({ location }) => {
                 autoAddBaseUrl: false,
                 target: "_self",
               },
-              { to: "/blog/", label: "阅读博客", autoAddBaseUrl: true },
-              { to: "/docs/", label: "阅读文档", autoAddBaseUrl: true },
+              { href: "https://blog.owenyang.top", label: "阅读木易的博客" },
+              { to: "/portal/docs/intro/", label: "阅读文档", autoAddBaseUrl: true },
             ].map(({ to, label, autoAddBaseUrl }) => (
               <li key={to}>
                 <Link to={to} autoAddBaseUrl={autoAddBaseUrl}>

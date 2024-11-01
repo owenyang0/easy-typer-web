@@ -31,35 +31,14 @@ module.exports = {
       type: "doc",
     },
     {
-      label: "快速开始",
-      type: "category",
-      items: [
-        {
-          label: "[待完善] Web在线练习",
-          type: "link",
-          href: "https://typer.owenyang.top/",
-        },
-        {
-          label: "[待完善] Mac跟打练习",
-          type: "link",
-          href: "https://typer.owenyang.top/",
-        },
-        {
-          label: "[待完善] Web程序与Mac程序的区别",
-          type: "link",
-          href: "https://typer.owenyang.top/",
-        },
-        {
-          label: "[待完善] 常用设置",
-          type: "link",
-          href: "https://typer.owenyang.top/",
-        },
-      ],
-    },
-    {
       label: "使用指南",
       type: "category",
       items: [
+        {
+          label: "快速上手",
+          id: "guides/quick-started",
+          type: "doc",
+        },
         {
           label: "易跟打macOS版下载",
           id: "guides/download",

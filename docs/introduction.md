@@ -13,21 +13,12 @@ description:
 
 本节主要讲述如何通过易跟打进行打字练习，快速提升您的打字速度：
 
-- [Web在线练习](/docs/) Web在线练习 - 正在进行中
-- [Mac跟打练习](/docs/) Mac跟打练习 - 正在进行中
-- [Web程序与Mac程序的区别](/docs/) Web程序与Mac程序的区别 - 正在进行中
-
-## 使用指南
-
-- [Web在线练习](/docs/) 正在进行中
-- [Mac跟打练习](/docs/) 正在进行中
-- [Web程序与Mac程序的区别](/docs/) 正在进行中
+- [快速开始](/docs/quick-started/) 快速开启在线练习
 
 ## Contributing
 
 - 有问题，提个[Issue](https://github.com/owenyang0/easy-typer/issues)
 - 有想法，提个[Issue](https://github.com/owenyang0/easy-typer/issues)
-- 或通过QQ群联系我：**木易跟打器** `787343469`
 - 有能力，提个[PR](https://github.com/owenyang0/easy-typer/pulls)
 ## 声明
 

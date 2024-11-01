@@ -15,9 +15,6 @@ description:
 
 **【发布记录】** [木易跟打器App所有发布记录] - [https://pan.baidu.com/s/16UKkWAnH9nk3Na45RGe1jg?pwd=8888](https://pan.baidu.com/s/16UKkWAnH9nk3Na45RGe1jg?pwd=8888) 提取码8888
 
-### QQ群文件
-群号 **787343469** 群文件下载
-
 ## 三、功能对比
 
 | 功能                            | mac客户端 | 网页版 |
