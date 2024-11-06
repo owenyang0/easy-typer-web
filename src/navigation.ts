@@ -27,19 +27,19 @@ export const headerData = {
         // },
         {
           text: '项目介绍',
-          href: '/portal/docs/intro/',
+          href: '/portal/docs/intro',
         },
         {
           text: '快速上手',
-          href: '/portal/docs/get-started/',
+          href: '/portal/docs/get-started',
         },
         {
           text: '发布日志',
-          href: '/portal/docs/changelog/',
+          href: '/portal/docs/changelog',
         },
         {
           text: 'macOS版下载',
-          href: '/portal/docs/download/',
+          href: '/portal/docs/download',
         },
       ],
     },
@@ -75,7 +75,7 @@ export const headerData = {
       target: '_blank'
     },
   ],
-  actions: [{ text: '下载macOS版', href: '/portal/docs/download/' }],
+  actions: [{ text: '下载macOS版', href: '/portal/docs/download' }],
 };
 
 export const footerData = {
