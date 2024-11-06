@@ -2,7 +2,7 @@
 publishDate: 2024-11-05T00:30:00Z
 title: '发布日志'
 excerpt: 木易跟打器版本记录，本程序所有变更历史都将记录于本文档，方便大家了解更新内容及规划。
-image: https://www.notion.so/images/page-cover/woodcuts_3.jpg
+image: https://static.owenyang.top/blogs/nasa_ibm_type_704.jpg
 category: Docs
 tags:
   - 木易跟打器
