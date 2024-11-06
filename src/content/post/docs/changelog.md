@@ -7,7 +7,7 @@ category: Docs
 tags:
   - 木易跟打器
 metadata:
-  canonical: https://typer.owenyang.top/portal/docs/changelog/
+  canonical: https://typer.owenyang.top/portal/docs/changelog
 ---
 
 木易跟打器版本记录，本程序所有变更历史都将记录于本文档，方便大家了解更新内容及规划

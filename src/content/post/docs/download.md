@@ -7,7 +7,7 @@ category: Docs
 tags:
   - 木易跟打器
 metadata:
-  canonical: https://typer.owenyang.top/portal/docs/download/
+  canonical: https://typer.owenyang.top/portal/docs/download
 ---
 
 木易跟打器可从在**网页练习**或下载**macOS客户端**使用，两者的差异只在于是否能直接载文的区别。

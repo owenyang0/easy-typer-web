@@ -7,7 +7,7 @@ category: Docs
 tags:
   - 木易跟打器
 metadata:
-  canonical: https://typer.owenyang.top/portal/docs/intro/
+  canonical: https://typer.owenyang.top/portal/docs/intro
 ---
 
 
