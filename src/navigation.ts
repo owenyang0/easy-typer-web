@@ -75,7 +75,7 @@ export const headerData = {
       target: '_blank'
     },
   ],
-  actions: [{ text: '下载macOS版', href: '/portal/docs/download/', target: '_blank' }],
+  actions: [{ text: '下载macOS版', href: '/portal/docs/download/' }],
 };
 
 export const footerData = {
