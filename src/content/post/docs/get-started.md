@@ -2,7 +2,7 @@
 publishDate: 2024-11-05T00:10:00Z
 title: '快速上手'
 excerpt: 木易跟打器版本记录，本程序所有变更历史都将记录于本文档，方便大家了解更新内容及规划。
-image: https://images.unsplash.com/photo-1534307671554-9a6d81f4d629?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1651&q=80
+image: https://static.owenyang.top/blogs/background2.jpg
 category: Docs
 tags:
   - 木易跟打器
@@ -36,11 +36,11 @@ metadata:
 
 **1) 木易跟打器macOS版-载文演示**
 
-<video style="max-width: 600px;" autoPlay controls="controls" loop alt="木易跟打器macOS版-载文演示" src="https://static.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4"></video>
+<video style="width: 90%; max-width: 600px;" autoPlay controls="controls" loop alt="木易跟打器macOS版-载文演示" src="https://static.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8macOS%E7%89%88-%E8%BD%BD%E6%96%87%E6%BC%94%E7%A4%BA.mp4"></video>
 
 **2) 木易跟打器-复合指标演示**
 
-<video style="max-width: 600px;" autoplay loop alt="木易跟打器-复合指标演示" src="https://static.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8-%E5%A4%8D%E5%90%88%E6%8C%87%E6%A0%87%E6%BC%94%E7%A4%BA.mp4"></video>
+<video style="width: 90%; max-width: 600px;" autoplay loop alt="木易跟打器-复合指标演示" src="https://static.owenyang.top/typers/%E6%9C%A8%E6%98%93%E8%B7%9F%E6%89%93%E5%99%A8-%E5%A4%8D%E5%90%88%E6%8C%87%E6%A0%87%E6%BC%94%E7%A4%BA.mp4"></video>
 
 
 ### 2.3 载文

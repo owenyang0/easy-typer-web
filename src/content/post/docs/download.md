@@ -2,7 +2,7 @@
 publishDate: 2024-11-05T00:20:00Z
 title: '木易跟打器macOS版下载'
 excerpt: 木易跟打器可从在网页练习或下载macOS客户端使用，两者的差异只在于是否能直接载文的区别。
-image: https://images.unsplash.com/photo-1546984575-757f4f7c13cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80
+image: https://static.owenyang.top/blogs/background1.jpg
 category: Docs
 tags:
   - 木易跟打器
