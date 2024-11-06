@@ -1,12 +1,4 @@
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
-[![Code Style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
-# 木易跟打器
-
-[This website](https://typer.owenyang.top/portal) is built using
-[Docusaurus 2](https://v2.docusaurus.io/). Pages & components are written in
-TypeScript, the styles in vanilla CSS with variables using
-[CSS Modules](https://github.com/css-modules/css-modules).
+# 🚀 木易跟打器
 
 <!-- prettier-ignore-start -->
 <div align="center">
@@ -21,56 +13,97 @@ TypeScript, the styles in vanilla CSS with variables using
 </div>
 <!-- prettier-ignore-end -->
 
-## Installation
+### Commands
 
-```script
-yarn
+All commands are run from the root of the project, from a terminal:
+
+| Command             | Action                                             |
+| :------------------ | :------------------------------------------------- |
+| `npm install`       | Installs dependencies                              |
+| `npm run dev`       | Starts local dev server at `localhost:3000`        |
+| `npm run build`     | Build your production site to `./dist/`            |
+| `npm run preview`   | Preview your build locally, before deploying       |
+| `npm run check`     | Check your project for errors                      |
+| `npm run fix`       | Run Eslint and format codes with Prettier          |
+| `npm run astro ...` | Run CLI commands like `astro add`, `astro preview` |
+
+<br>
+
+### Configuration
+
+Basic configuration file: `./src/config.yaml`
+
+```yaml
+site:
+  name: 'Example'
+  site: 'https://example.com'
+  base: '/' # Change this if you need to deploy to Github Pages, for example
+  trailingSlash: false # Generate permalinks with or without "/" at the end
+
+  googleSiteVerificationId: false # Or some value,
+
+# Default SEO metadata
+metadata:
+  title:
+    default: 'Example'
+    template: '%s — Example'
+  description: 'This is the default meta description of Example website'
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: 'Example'
+    images:
+      - url: '~/assets/images/default.png'
+        width: 1200
+        height: 628
+    type: website
+  twitter:
+    handle: '@twitter_user'
+    site: '@twitter_user'
+    cardType: summary_large_image
+
+i18n:
+  language: en
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: true # If the blog will be enabled
+    postsPerPage: 6 # Number of posts per page
+
+    post:
+      isEnabled: true
+      permalink: '/blog/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true # If a widget with related posts is to be displayed below each post
+    relatedPostsCount: 4 # Number of related posts to display
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: null # or "G-XXXXXXXXXX"
+
+ui:
+  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
 ```
-
-Note. On Linux you may have to install `autoconf` package to have a successful
-installation. On Ubuntu it should be enough to run
-`sudo apt-get install autoconf` command to install the package.
-
-## Local development
-
-```script
-yarn start
-```
-
-This command starts a local development server and open up a browser window.
-Most changes are reflected live without having to restart the server.
-
-## Build for production
-
-```script
-yarn build
-```
-
-This command generates static content into the `build` directory and can be
-served using any static contents hosting service. For that purpose, you can also
-use:
-
-```script
-yarn serve
-```
-
-# Code Quality
-
-## 1. Linting
-
-The coding style rules are defined by [Prettier](https://prettier.io/) and
-enforced by [Eslint](https://eslint.org)
-
-On top of this, we follow the rules set by the
-[JavaScript Standard Style](https://standardjs.com/rules.html).
-
-You do not need to run the linting task manually, Webpack will take care of that
-for you.
-
-## 2. Git Hooks
-
-We use [Husky](https://github.com/typicode/husky) to automatically deploy git
-hooks.
-
-On every `git commit` we check that images added to `static/pimgs/*` do not exceed
-10MB.

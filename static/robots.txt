@@ -1,6 +1,0 @@
-User-agent: *
-
-Allow: /sitemap.xml
-Disallow: /__unused/
-Sitemap: https://typer.owenyang.top/portal/sitemap.xml
-Host: https://typer.owenyang.top

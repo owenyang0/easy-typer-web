@@ -1,0 +1,282 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Note from '~/components/widgets/Note.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+// import Steps from '~/components/widgets/Steps.astro';
+// import Content from '~/components/widgets/Content.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: '木易跟打器 — 一款支持macOS、Web使用的跨平台打字练习程序',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: '开始Web跟打练习',
+        href: 'https://typer.owenyang.top',
+        icon: 'tabler:rocket',
+      },
+    ]}
+    image={{ src: 'https://static.owenyang.top/typers/common/logo-lanscape.png', alt: '木易跟打器 Hero Image' }}
+  >
+    <Fragment slot="title">
+      木易跟打器<br />在线跟打 + <span class="text-accent highlight">macOS</span>使用
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        <span class="font-semibold">木易跟打器</span>又叫《易·跟打》，是一款支持macOS、Web使用的 <span class="mb-1 font-bold text-blue-600">跨平台</span> 打字练习程序，是macOS平台唯一的、可直接通过QQ群载文的跟打器</span>
+    </Fragment>
+  </Hero>
+
+  <!-- Note Widget ******************* -->
+   
+  <Note />
+
+  <!-- Features Widget *************** -->
+
+  <Features
+    id="features"
+    tagline="Features"
+    title="优势与特色"
+    subtitle="木易跟打器是现代跟打器的代表之作，从UI设计到交互体验都在不断追求极致。"
+    items={[
+      {
+        title: '跨平台支持',
+        description:
+          '1、Web 在线跟打练习；2、macOS 平台上直接载文；3、基于PWA的渐进式免安装 Web App；4、Android/iOS 上可以使用微App',
+        icon: 'tabler:brand-tailwind',
+      },
+      {
+        title: '功能丰富',
+        description:
+          '1、阅读、发文、跟打、成绩可视化等；2、编码提示、支持复合指标练习；3、速度、击键、码长等丰富成绩指标；4、内置单字+名篇等丰富练习素材',
+        icon: 'tabler:components',
+      },
+      {
+        title: '足够安全',
+        description:
+          '1、基于浏览器 IndexDB 的数据本地化；2、无任何数据后台上传；3、虎码用户设置预设',
+          icon: 'tabler:bulb',
+      },
+      {
+        title: '支持码表拓展',
+        description:
+          '内置虎码单字、虎码字词和小鹤编码，若使用其他输入方案如五笔、郑码等，可以在设置-码表设置中上传自定义码表',
+        icon: 'tabler:rocket',
+      },
+    ]}
+  />
+
+  <!-- Features2 Widget ************** -->
+
+  <Features2
+    title="常用功能"
+    subtitle="木易跟打器提供了丰富的功能与组件，为您的跟打练习提供全方位保障"
+    tagline="Components"
+    items={[
+      {
+        title: '编码提示',
+        description: "内置虎码单字、虎码字词和小鹤编码，支持自定义码表及字词提示，为您提供全面的编码提示能力。",
+        icon: 'flat-color-icons:database',
+        callToAction: {
+          // target: '_blank',
+          text: '码表设置',
+          href: 'https://typer.owenyang.top/setting',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '快速发文',
+        description: "基于字频数据预制专业分级练习文本，虎码素材，精选入门必打、同音文、必背名篇等等",
+        icon: 'flat-color-icons:template',
+        callToAction: {
+          text: '选择练习文本',
+          href: 'https://typer.owenyang.top/kata',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '跟打+阅读',
+        description:
+          "上传书籍即刻开始跟打+阅读，让您在阅读过程中持续练习不断提升您的打字速度。",
+        icon: 'flat-color-icons:gallery',
+        callToAction: {
+          text: '开始跟打阅读',
+          href: 'https://typer.owenyang.top/reading',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '词库练习',
+        description:
+          '支持词库练习，可自由筛选一简、二简、三简及全码词，助您熟练掌握新码表。',
+        icon: 'flat-color-icons:approval',
+        callToAction: {
+          text: '开始词库练习',
+          href: 'https://typer.owenyang.top/practice',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '跟打历史',
+        description:
+          '跟打历史记录了您练习过程中的所有数据并免费对大家开放，可视化自己的成长过程，让您对自己的提升有更直观的认识。',
+        icon: 'flat-color-icons:business-contact',
+        callToAction: {
+          text: '打开跟打历史',
+          href: 'https://typer.owenyang.top/history',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '键盘统计',
+        description:
+          "通过记录练习过程中每个按键的频次，最终以热力图的方式呈现，让您对自己的码表有一个更细致的认知。",
+        icon: 'flat-color-icons:document',
+        callToAction: {
+          text: '打开键盘统计',
+          href: 'https://typer.owenyang.top/summary',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '常见问题与反馈',
+        description: '🔥有任何问题可直接点击留言反馈，我看到后会及时回复并处理。',
+        icon: 'flat-color-icons:voice-presentation',
+        callToAction: {
+          text: '留言反馈',
+          href: 'https://blog.owenyang.top/easy-typer-faq',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '版本记录',
+        description: '木易跟打器变更历史，可以点击了解更多。',
+        icon: 'flat-color-icons:advertising',  
+        callToAction: {
+          text: '版本记录',
+          href: 'https://typer.owenyang.top/portal/docs/changelog',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: '支持赞助',
+        description: '木易跟打器自2022年12月26日发布以来，已经迭代了70多个版本。感谢您们的支持使其发展至今。如果您喜欢我的作品，您的支持将是我的动力源泉。',
+        icon: 'flat-color-icons:currency-exchange',
+        callToAction: {
+          text: '支持赞助',
+          href: 'https://blog.owenyang.top/buy-me-a-coffee',
+          icon: 'tabler:chevron-right',
+        },
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Features2>
+
+  <!-- HighlightedPosts Widget ******* -->
+
+  <BlogLatestPosts
+    title="在木易博客了解更多"
+    information={`Owen Yang 又叫木易某某，互联网从业者，专注前端开发（FE）领域，同时也是数码产品爱好者和体验者（电子垃圾体验者）。《木易跟打器》和《易阅读》两个应用的作者。 他将以专业的互联网视角分享前沿技术、实用工具及有趣的数码体验，为读者带来丰富的干货内容和新鲜的见解。`}
+  />
+
+  <!-- FAQs Widget ******************* -->
+
+  <FAQs
+    title="常见问题"
+    subtitle="如您在使用过程中遇到任何问题，可在各大QQ群里寻求帮助，也可通过上述的反馈链接留言反馈。"
+    tagline="FAQs"
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+        title: 'macOS版跟打器如何载文跟打？',
+        description:
+          "木易跟打器macOS版可通过热键 F4 激活当前QQ群聊天窗口，从当前鼠标位置载文并跟打。",
+          callToAction: {
+          target: '_blank',
+          text: '了解更多',
+          href: '/',
+          icon: 'tabler:chevron-right',
+        },
+      },
+      {
+        title: 'Android/iOS如何使用跟打器微应用？',
+        description:
+          "使用现代浏览器如Chrome/Edge/Safari打开木易跟打器首页，点击分享-添加到主屏幕，即可添加到桌面使用。",
+      },
+      {
+        title: '打字记录突然不见了，是怎么回事？',
+        description:
+          "木易跟打器将跟打记录与成绩存在浏览器里，所以请勿清空缓存，否则会有数据丢失的风险。",
+      },
+      {
+        title: '什么时候出Windows版本？',
+        description:
+          '作者暂时没有精力去适配Windows版本，但是木易跟打器是基于Web的，可以在Windows上使用，也可以尝试其他版本的跟打器。',
+      },
+      {
+        title: '跟打历史如何导入&导出？',
+        description:
+          "数据存在浏览器里，目前没有导入&导出功能，请注意不要轻易清理浏览器缓存。",
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </FAQs>
+
+  <!-- Stats Widget ****************** -->
+
+  <Stats
+    title="木易跟打器数据"
+    stats={[
+      { title: 'Pv', amount: '700+' },
+      { title: 'Stars', amount: '60+' },
+      { title: 'Users', amount: '400+' },
+    ]}
+  >
+  </Stats>
+
+  <!-- CallToAction Widget *********** -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: '下载macOS版',
+        href: 'https://typer.owenyang.top/portal/docs/guides/download/',
+        // target: '_blank',
+        icon: 'tabler:download',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      木易跟打器<br class="block sm:hidden" /><span class="text-accent highlight"> macOS版</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      木易跟打器支持网页在线练习或下载macOS客户端使用，<br class="hidden md:inline" />两者的差异只在于是否能<span class="font-bold text-blue-600">直接载文</span>的区别。
+    </Fragment>
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </CallToAction>
+</Layout>
