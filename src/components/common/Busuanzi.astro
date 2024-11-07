@@ -1,0 +1,23 @@
+---
+---
+
+<script is:inline async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script is:inline>
+  const fetchBusuanzi = () => {
+    bszTag && bszTag.hides()
+    bszCaller.fetch('//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback', function (t) {
+      bszTag.texts(t)
+      bszTag.shows()
+    })
+  }
+  let currentHref = location.href
+
+  document.addEventListener('astro:page-load', (event) => {
+    if (currentHref !== event.target.URL) {
+      currentHref = event.target.URL
+      fetchBusuanzi()
+    }
+  });
+</script>
+

@@ -130,6 +130,8 @@ export interface Stat {
   amount?: number | string;
   title?: string;
   icon?: string;
+  containerId?: string;
+  amountId?: string;
 }
 
 export interface Item {
