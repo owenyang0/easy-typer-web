@@ -69,11 +69,11 @@ export const headerData = {
         },
       ],
     },
-    {
-      text: 'Github',
-      href: 'https://github.com/owenyang0/easy-typer',
-      target: '_blank'
-    },
+    // {
+    //   text: 'Github',
+    //   href: 'https://github.com/owenyang0/easy-typer',
+    //   target: '_blank'
+    // },
   ],
   actions: [{ text: '下载macOS版', href: '/portal/docs/download' }],
 };
