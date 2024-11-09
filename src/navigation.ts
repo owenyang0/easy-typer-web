@@ -91,7 +91,7 @@ export const footerData = {
       title: '木易跟打器',
       links: [
         { text: '🎉 开始跟打', href: 'https://typer.owenyang.top' },
-        { text: '👊 快速上手', href: 'https://typer.owenyang.top/help' },
+        { text: '👊 快速上手', href: '/portal/docs/get-started' },
         { text: '💥 常见问题FAQ', href: 'https://blog.owenyang.top/easy-typer-faq' },
         { text: '🍺 支持赞助', href: 'https://blog.owenyang.top/buy-me-a-coffee' },
       ],

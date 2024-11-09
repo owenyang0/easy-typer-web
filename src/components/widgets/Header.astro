@@ -127,16 +127,6 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
             </li>
           ))
         }
-        <li class="flex align-middle">
-          <a
-            target="_blank"
-            rel="noopener"
-            class="bg-center w-20 bg-contain bg-no-repeat bg-[url(https://img.shields.io/github/stars/owenyang0/easy-typer.svg?style=social&label=Stars&maxAge=86400)]"
-            title="If you like 木易跟打器, give us a star."
-            href="https://github/stars/owenyang0/easy-typer"
-          >
-          </a>
-        </li>
       </ul>
     </nav>
     <div
@@ -146,6 +136,14 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       ]}
     >
       <div class="items-center flex justify-between w-full md:w-auto">
+        <a
+          target="_blank"
+          rel="noopener"
+          class="block bg-center w-24 h-10 bg-contain bg-no-repeat bg-[url(https://img.shields.io/github/stars/owenyang0/easy-typer.svg?style=social&label=Stars&maxAge=86400)]"
+          title="If you like 木易跟打器, give us a star."
+          href="https://github.com/owenyang0/easy-typer"
+        >
+        </a>
         <div class="flex">
           {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 md:w-5 md:h-5 md:inline-block" />}
           {
